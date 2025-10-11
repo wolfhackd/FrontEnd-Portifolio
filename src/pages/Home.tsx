@@ -1,134 +1,110 @@
-import {
-  ChevronDown,
-  Github,
-  LinkedinIcon,
-  LucideGithub,
-  Mail,
-  MessageCircle,
-} from 'lucide-react';
-import { Navbar } from '@/components/Navbar';
-import { Projects, TECHNOLOGIES } from '@/components/Projects';
+import ContactMe from '@/components/ContactMe';
+import CopyEmail from '@/components/CopyEmail';
+import MenubarHome from '@/components/MenubarHome';
+import { StarsBackground } from '@/components/ui/stars-background';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { motion } from 'framer-motion';
+import { Toaster } from 'sonner';
+import { Github, Linkedin } from 'lucide-react';
 
-export const Home = () => {
+const Home = () => {
+  const handleClick = (link: string) => {
+    window.open(`${link}`, '_blanck');
+  };
+
   return (
-    <div className="w-full overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="min-h-screen w-full bg-[radial-gradient(circle,rgba(999,999,999,1)_0%,rgba(148,187,233,1)_100%)]">
-        <Navbar />
-
-        <div className="mt-8 flex flex-1 flex-col items-center justify-center space-y-10 px-4 text-center">
-          {/* Logo */}
-          <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-black border-dashed">
-            <h1 className="font-bold text-5xl">ML</h1>
-          </div>
-
-          {/* Headings */}
-          <h2 className="font-bold text-3xl uppercase md:text-4xl">
-            Oi, eu sou Mauro Leal
+    <>
+      <MenubarHome />
+      <Toaster />
+      <section className="flex flex-col w-full pb-10 h-screen relative bg-gradient-to-b from-black via-[#0a0a0a] to-gray-900 text-white overflow-hidden">
+        {/* motion.div substitui o container principal */}
+        <motion.div
+          className="flex flex-col items-center space-y-12 pt-[18%] z-40"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        >
+          <h2 className="text-4xl md:text-5xl font-semibold text-center drop-shadow-lg">
+            Transformamos suas ideias em código
           </h2>
-          <h3 className="font-extralight text-2xl uppercase md:text-4xl">
-            Desenvolvedor FullStack
-          </h3>
 
-          <div className="flex gap-4">
-            <a
-              href="https://github.com/wolfhackd"
-              rel="noopener"
-              target="_blank"
-            >
-              <LucideGithub className="h-8 w-8" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/mauro-leal-b1134425a/"
-              rel="noopener"
-              target="_blank"
-            >
-              <LinkedinIcon className="h-8 w-8" />
-            </a>
-          </div>
-
-          {/* Description */}
-          <p className="mx-auto w-[90%] text-justify font-medium text-lg md:w-[60%] md:text-xl lg:text-2xl">
-            Sou Mauro Leal, 21 anos, estudante de Análise e Desenvolvimento de
-            Sistemas e desenvolvedor full stack. Trabalho com JavaScript,
-            TypeScript, Node.js, React, entre outras tecnologias, e já
-            desenvolvi aplicativos e sistemas web completos.
+          <p className="text-2xl md:text-3xl font-light text-center max-w-2xl leading-relaxed">
+            Olá, meu nome é <span className="font-medium">Mauro Leal</span> e sou desenvolvedor
+            Fullstack.
           </p>
 
-          {/* Scroll icon */}
-          <ChevronDown className="h-10 w-10 animate-bounce text-gray-800" />
-        </div>
-      </section>
-
-      {/* Projetos */}
-      <section className="py-20" id="projetos">
-        <h1 className="text-center font-bold text-4xl">Projetos</h1>
-        <Projects />
-      </section>
-
-      {/* Tecnologias */}
-      <section className="py-20" id="tecnologias">
-        <h1 className="mb-12 text-center font-bold text-4xl">Tecnologias</h1>
-
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-          {Object.values(TECHNOLOGIES).map((tech, index) => (
-            <div
-              className={`flex flex-col items-center justify-center rounded-lg p-4 shadow-md transition-transform hover:scale-105 ${tech.color} text-white`}
-              key={index}
-            >
-              <span className="font-semibold">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Contatos */}
-      <section className="bg-gray-100 py-20" id="contato">
-        <h1 className="mb-12 text-center font-bold text-4xl">Contatos</h1>
-
-        <div className="flex flex-wrap justify-center gap-6">
-          {/* WhatsApp */}
-          <a
-            className="flex items-center gap-3 rounded-lg bg-green-500 px-6 py-4 text-white shadow-md transition-transform hover:scale-105"
-            href="https://wa.me/81996676623"
-            rel="noopener noreferrer"
-            target="_blank"
+          <motion.div
+            className="flex gap-10"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
           >
-            <MessageCircle />
-            <span>WhatsApp</span>
-          </a>
+            <ContactMe />
+            <CopyEmail email="mauro.costa.12.j@hotmail.com" />
+          </motion.div>
+        </motion.div>
 
-          {/* Email */}
-          <a
-            className="flex items-center gap-3 rounded-lg bg-red-500 px-6 py-4 text-white shadow-md transition-transform hover:scale-105"
-            href="mailto:mauro.costa.12.j@hotmail.com"
-          >
-            <Mail className="ri-mail-line text-2xl" />
-            <span>Email</span>
-          </a>
-
-          <a
-            className="flex items-center gap-3 rounded-lg bg-blue-700 px-6 py-4 text-white shadow-md transition-transform hover:scale-105"
-            href="https://www.linkedin.com/in/mauro-leal-b1134425a/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <LinkedinIcon />
-            <span>LinkedIn</span>
-          </a>
-
-          {/* GitHub */}
-          <a
-            className="flex items-center gap-3 rounded-lg bg-gray-800 px-6 py-4 text-white shadow-md transition-transform hover:scale-105"
-            href="https://github.com/wolfhackd"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Github />
-            <span>GitHub</span>
-          </a>
-        </div>
+        <StarsBackground />
       </section>
-    </div>
+      <section className="w-full flex justify-center py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-transparent backdrop-blur-sm ">
+        <motion.div
+          className="max-w-3xl text-center px-6 space-y-6 z-4000"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          viewport={{ once: false }}
+        >
+          <p className="text-sm uppercase tracking-[3px] text-gray-400">Sobre Mim</p>
+
+          <h2 className="text-4xl md:text-5xl font-semibold text-white drop-shadow-lg">
+            Desenvolvedor Full-Stack e um curioso
+          </h2>
+
+          <p className="text-gray-300 leading-relaxed">
+            Eu sou <span className="font-semibold text-white">Mauro Leal</span>, apaixonado por
+            criar soluções digitais. Do front-end ao back-end, meu foco é resolver problemas
+            complexos com código limpo e eficiente. Sempre buscando a evolução para ser um
+            profissional melhor.
+          </p>
+
+          <p className="text-gray-400 italic">
+            Quando não estou trabalhando, estou explorando novas ideias e saciando minha
+            curiosidade.
+          </p>
+
+          <blockquote className="text-gray-500 text-sm italic border-l-4 border-gray-700 pl-4 bg-accent">
+            "O presente é deles, mas o futuro é nosso." — Nikola Tesla
+          </blockquote>
+
+          <div className="flex justify-center gap-6 z-400">
+            <HoverCard>
+              <HoverCardTrigger
+                className="cursor-pointer"
+                onClick={() => handleClick('https://www.linkedin.com/in/mauro-leal-b1134425a/')}
+              >
+                <Linkedin />
+              </HoverCardTrigger>
+              <HoverCardContent side="top" className="text-center w-fit">
+                LinkedIn
+              </HoverCardContent>
+            </HoverCard>
+            <HoverCard>
+              <HoverCardTrigger
+                className="cursor-pointer"
+                onClick={() => handleClick('https://github.com/wolfhackd')}
+              >
+                <Github />
+              </HoverCardTrigger>
+              <HoverCardContent side="top" className="text-center w-fit">
+                Github
+              </HoverCardContent>
+            </HoverCard>
+          </div>
+        </motion.div>
+        <StarsBackground className="z-1" />
+      </section>
+    </>
   );
 };
+
+export default Home;

@@ -1,0 +1,58 @@
+import { Button } from './ui/button';
+
+const MenubarHome = () => {
+  return (
+    //TEnho que fazer um on click para cada botão (Talvez um novo componente)
+
+    <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed w-full z-5000 justify-between">
+      <img
+        src="/logo.png"
+        className="size-10 mx-6 
+      "
+      />
+
+      <nav className="bg-[#ADADAE] rounded-full border-2 border-black self-center ">
+        <Button
+          variant={'link'}
+          className="cursor-pointer rounded-full text-white hover:bg-[#8F9091] font-light"
+        >
+          Home
+        </Button>
+        <Button
+          variant={'link'}
+          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+        >
+          Sobre
+        </Button>
+        <Button
+          variant={'link'}
+          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+        >
+          Trabalho
+        </Button>
+        <Button
+          variant={'link'}
+          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+        >
+          Mais
+        </Button>
+        <Button
+          variant={'link'}
+          className="cursor-pointer  rounded-full text-white bg-[#8F9091] hover:bg-[#8F9091] font-light"
+        >
+          Fale Comigo
+        </Button>
+      </nav>
+
+      <p>
+        <span className="text-green-500">C</span>
+        <span>ode</span>
+        <span className="text-green-500">W</span>
+        <span>ay</span>
+        <span className="text-green-500">_</span>
+      </p>
+    </div>
+  );
+};
+
+export default MenubarHome;
