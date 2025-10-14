@@ -4,7 +4,7 @@ const MenubarHome = () => {
   return (
     //TEnho que fazer um on click para cada botão (Talvez um novo componente)
 
-    <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed w-full z-5000 justify-between">
+    <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed z-5000 justify-between w-full ">
       <img
         src="/logo.png"
         className="size-10 mx-6 

@@ -6,6 +6,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { motion } from 'framer-motion';
 import { Toaster } from 'sonner';
 import { Github, Linkedin } from 'lucide-react';
+import Technologies from '@/components/Technologies';
+import { ProjectsSection } from '@/components/ProjectsSection';
 
 const Home = () => {
   const handleClick = (link: string) => {
@@ -46,9 +48,10 @@ const Home = () => {
 
         <StarsBackground />
       </section>
-      <section className="w-full flex justify-center py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-transparent backdrop-blur-sm ">
+      {/* AboutMe */}
+      <section className="w-full flex justify-center py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-blue-300 backdrop-blur-sm ">
         <motion.div
-          className="max-w-3xl text-center px-6 space-y-6 z-4000"
+          className="max-w-3xl text-center px-auto space-y-6 z-4000"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -103,6 +106,10 @@ const Home = () => {
         </motion.div>
         <StarsBackground className="z-1" />
       </section>
+      {/* techStack */}
+      {/* Importar as tecnologias aqui pra usar nos projetos os mesmos objetos */}
+      <Technologies />
+      <ProjectsSection />
     </>
   );
 };
