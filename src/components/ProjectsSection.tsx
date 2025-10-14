@@ -5,7 +5,7 @@ import { Badge } from './ui/badge';
 export function ProjectsSection() {
   return (
     <>
-      <section className="bg-blue-950 px-10 text-white">
+      <section className="bg-slate-950 px-10 text-white">
         <h2 className="text-4xl font-bold text-center p-6">Últimos Projetos</h2>
 
         {PROJECTS.map((project, i) => (
@@ -50,7 +50,7 @@ export function ProjectsSection() {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                className="text-cyan-400 hover:text-cyan-300 transition-colors w-fit"
               >
                 Ver projeto
               </a>
