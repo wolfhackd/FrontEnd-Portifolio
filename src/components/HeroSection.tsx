@@ -1,0 +1,38 @@
+import { motion } from 'motion/react';
+import ContactMe from './ContactMe';
+import CopyEmail from './CopyEmail';
+
+const HeroSection = () => {
+  return (
+    <section className="flex flex-col w-full pb-10 h-screen relative  text-white overflow-hidden">
+      {/* motion.div substitui o container principal */}
+      <motion.div
+        className="flex flex-col items-center space-y-12 pt-[18%] z-40"
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+      >
+        <h2 className="text-4xl md:text-5xl font-semibold text-center drop-shadow-lg">
+          Transformamos suas ideias em código
+        </h2>
+
+        <p className="text-2xl md:text-3xl font-light text-center max-w-2xl leading-relaxed">
+          Olá, meu nome é <span className="font-medium">Mauro Leal</span> e sou desenvolvedor
+          Fullstack.
+        </p>
+
+        <motion.div
+          className="flex gap-10"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: 'easeOut' }}
+        >
+          <ContactMe />
+          <CopyEmail email="mauro.costa.12.j@hotmail.com" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default HeroSection;

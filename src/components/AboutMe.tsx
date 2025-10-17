@@ -1,0 +1,68 @@
+import { motion } from 'motion/react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
+import { Github, Linkedin } from 'lucide-react';
+import { StarsBackground } from './ui/stars-background';
+
+export const handleClick = (link: string) => {
+  window.open(`${link}`, '_blanck');
+};
+
+export const AboutMe = () => {
+  return (
+    <section className="w-full flex justify-center py-20 bg-transparent">
+      <motion.div
+        className="max-w-3xl text-center px-auto space-y-6 z-4000"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        viewport={{ once: false }}
+      >
+        <p className="text-sm uppercase tracking-[3px] text-gray-400">Sobre Mim</p>
+
+        <h2 className="text-4xl md:text-5xl font-semibold text-white drop-shadow-lg">
+          Desenvolvedor Full-Stack e um curioso
+        </h2>
+
+        <p className="text-gray-300 leading-relaxed">
+          Eu sou <span className="font-semibold text-white">Mauro Leal</span>, apaixonado por criar
+          soluções digitais. Do front-end ao back-end, meu foco é resolver problemas complexos com
+          código limpo e eficiente. Sempre buscando a evolução para ser um profissional melhor.
+        </p>
+
+        <p className="text-gray-400 italic">
+          Quando não estou trabalhando, estou explorando novas ideias e saciando minha curiosidade.
+        </p>
+
+        <blockquote className="text-gray-500 text-sm italic border-l-4 border-gray-700 pl-4 bg-accent">
+          "O presente é deles, mas o futuro é nosso." — Nikola Tesla
+        </blockquote>
+
+        <div className="flex justify-center gap-6 z-400 text-white">
+          <HoverCard>
+            <HoverCardTrigger
+              className="cursor-pointer"
+              onClick={() => handleClick('https://www.linkedin.com/in/mauro-leal-b1134425a/')}
+            >
+              <Linkedin />
+            </HoverCardTrigger>
+            <HoverCardContent side="top" className="text-center w-fit">
+              LinkedIn
+            </HoverCardContent>
+          </HoverCard>
+          <HoverCard>
+            <HoverCardTrigger
+              className="cursor-pointer"
+              onClick={() => handleClick('https://github.com/wolfhackd')}
+            >
+              <Github />
+            </HoverCardTrigger>
+            <HoverCardContent side="top" className="text-center w-fit">
+              Github
+            </HoverCardContent>
+          </HoverCard>
+        </div>
+      </motion.div>
+      <StarsBackground className="z-1" />
+    </section>
+  );
+};

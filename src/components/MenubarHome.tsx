@@ -6,7 +6,7 @@ const MenubarHome = () => {
 
     <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed z-5000 justify-between w-full ">
       <img
-        src="/logo.png"
+        src="/logoML.png"
         className="size-10 mx-6 
       "
       />

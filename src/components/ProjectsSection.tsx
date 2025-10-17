@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import { PROJECTS, TECHNOLOGIES } from '../../db';
 import { Badge } from './ui/badge';
+import { StarsBackground } from './ui/stars-background';
 
 export function ProjectsSection() {
   return (
     <>
-      <section className="bg-slate-950 px-10 text-white">
+      <section className="bg-gradient-to-b from-black via-[#0a0a0a] to-gray-900 px-10 text-white">
         <h2 className="text-4xl font-bold text-center p-6">Últimos Projetos</h2>
 
         {PROJECTS.map((project, i) => (
