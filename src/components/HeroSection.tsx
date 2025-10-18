@@ -2,6 +2,50 @@ import { motion } from 'motion/react';
 import ContactMe from './ContactMe';
 import CopyEmail from './CopyEmail';
 import { StarsBackground } from './ui/stars-background';
+import { TypewriterEffect } from './typewriter-effect';
+
+const words = [
+  {
+    text: 'Olá,',
+    className: ' text-white',
+  },
+  {
+    text: 'meu',
+    className: ' text-white',
+  },
+  {
+    text: 'nome',
+    className: ' text-white',
+  },
+  {
+    text: 'é',
+    className: ' text-white',
+  },
+  {
+    text: 'Mauro',
+    className: 'font-medium text-white',
+  },
+  {
+    text: 'Leal',
+    className: 'font-medium text-white',
+  },
+  {
+    text: 'e',
+    className: ' text-white',
+  },
+  {
+    text: ' sou',
+    className: ' text-white',
+  },
+  {
+    text: ' desenvolvedor',
+    className: ' text-white',
+  },
+  {
+    text: ' Fullstack.',
+    className: ' text-white',
+  },
+];
 
 const HeroSection = () => {
   return (
@@ -17,10 +61,12 @@ const HeroSection = () => {
           Transformamos suas ideias em código
         </h2>
 
-        <p className="text-2xl md:text-3xl font-light text-center max-w-2xl leading-relaxed">
+        {/* <p className="text-2xl md:text-3xl font-light text-center max-w-2xl leading-relaxed">
           Olá, meu nome é <span className="font-medium">Mauro Leal</span> e sou desenvolvedor
           Fullstack.
-        </p>
+        </p> */}
+
+        <TypewriterEffect words={words} className="text-white" />
 
         <motion.div
           className="flex gap-10"

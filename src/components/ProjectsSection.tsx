@@ -7,7 +7,7 @@ import { StickyScroll } from './sticky-scroll-reveal';
 export function ProjectsSection() {
   return (
     <>
-      <section className="h-screen">
+      <section className="">
         <StickyScroll content={PROJECTS} />
       </section>
     </>
