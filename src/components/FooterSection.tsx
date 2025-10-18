@@ -1,6 +1,7 @@
 import { Github, Linkedin } from 'lucide-react';
 import { handleClick } from './AboutMe';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
+import { motion } from 'motion/react';
 
 const FooterSection = () => {
   return (
@@ -31,10 +32,34 @@ const FooterSection = () => {
           {/* Arrumar os Botoes */}
           <div className="flex flex-col border-l-2 pl-2">
             <h3 className="font-bold">Geral</h3>
-            <span>Home</span>
-            <span>Sobre</span>
-            <span>Projetos</span>
-            <span>Mais</span>
+            <motion.span
+              initial={{ fontWeight: 400 }}
+              whileHover={{ fontWeight: 700 }}
+              transition={{ duration: 0.2 }}
+            >
+              Home
+            </motion.span>
+            <motion.span
+              initial={{ fontWeight: 400 }}
+              whileHover={{ fontWeight: 700 }}
+              transition={{ duration: 0.2 }}
+            >
+              Sobre
+            </motion.span>
+            <motion.span
+              initial={{ fontWeight: 400 }}
+              whileHover={{ fontWeight: 700 }}
+              transition={{ duration: 0.2 }}
+            >
+              Projetos
+            </motion.span>
+            <motion.span
+              initial={{ fontWeight: 400 }}
+              whileHover={{ fontWeight: 700 }}
+              transition={{ duration: 0.2 }}
+            >
+              Mais
+            </motion.span>
           </div>
         </div>
         <div className="flex justify-around">

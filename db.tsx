@@ -76,7 +76,7 @@ export const PROJECTS: Project[] = [
     title: 'Let Me Ask',
     description:
       'O Let Me Ask é um app de perguntas e respostas em tempo real para lives e eventos, onde os participantes podem enviar questões, votar nas mais relevantes e acompanhar se já foram respondidas. A proposta é organizar a participação do público, promovendo engajamento e clareza na comunicação.',
-    images: ['/letmeaskone.jpeg', '/letmeasktwo.jpeg'],
+    images: ['/letmeasktwo.jpeg', '/letmeaskone.jpeg'],
     technologies: [
       'react',
       'vite',
