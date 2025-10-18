@@ -1,10 +1,11 @@
 import { motion } from 'motion/react';
 import ContactMe from './ContactMe';
 import CopyEmail from './CopyEmail';
+import { StarsBackground } from './ui/stars-background';
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col w-full pb-10 h-screen relative  text-white overflow-hidden">
+    <section className="flex flex-col w-full pb-10 h-screen relative text-white overflow-hidden">
       {/* motion.div substitui o container principal */}
       <motion.div
         className="flex flex-col items-center space-y-12 pt-[18%] z-40"
@@ -31,6 +32,9 @@ const HeroSection = () => {
           <CopyEmail email="mauro.costa.12.j@hotmail.com" />
         </motion.div>
       </motion.div>
+      <StarsBackground className="absolute" />
+      <StarsBackground className="absolute" />
+      <StarsBackground className="absolute" />
     </section>
   );
 };

@@ -9,12 +9,12 @@ export const handleClick = (link: string) => {
 
 export const AboutMe = () => {
   return (
-    <section className="w-full flex justify-center py-20 bg-transparent">
+    <section className="w-full flex justify-center py-20 bg-transparent relative">
       <motion.div
         className="max-w-3xl text-center px-auto space-y-6 z-4000"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 1, ease: 'easeOut' }}
         viewport={{ once: false }}
       >
         <p className="text-sm uppercase tracking-[3px] text-gray-400">Sobre Mim</p>
@@ -62,7 +62,9 @@ export const AboutMe = () => {
           </HoverCard>
         </div>
       </motion.div>
-      <StarsBackground className="z-1" />
+      <StarsBackground className="absolute" />
+      <StarsBackground className="absolute" />
+      <StarsBackground className="absolute" />
     </section>
   );
 };

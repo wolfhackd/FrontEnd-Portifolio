@@ -1,5 +1,4 @@
 import MenubarHome from '@/components/MenubarHome';
-import { StarsBackground } from '@/components/ui/stars-background';
 import { Toaster } from 'sonner';
 import Technologies from '@/components/Technologies';
 import { ProjectsSection } from '@/components/ProjectsSection';
@@ -13,14 +12,12 @@ const Home = () => {
       <MenubarHome />
       <Toaster />
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-gray-900">
+        {/* <div> */}
         <HeroSection />
-        {/* AboutMe */}
         <AboutMe />
-        {/* techStack */}
         {/* Tenho que fazer um update para usar db */}
         <Technologies />
         <ProjectsSection />
-        <StarsBackground />
         <FooterSection />
       </div>
     </>
