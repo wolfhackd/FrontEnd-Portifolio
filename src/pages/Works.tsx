@@ -1,40 +1,89 @@
-import { CometCard } from '@/components/comet-card';
+import { PROJECTS, TECHNOLOGIES } from '../../db';
+import { Link } from 'react-router';
+import { motion } from 'motion/react';
+import MenubarHome from '@/components/MenubarHome';
 
 const Works = () => {
   return (
-    <div>
-      <CometCard>
-        <button
-          type="button"
-          className="my-10 flex w-80 cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-2 saturate-0 md:my-20 md:p-4"
-          aria-label="View invite F7RA"
-          style={{
-            transformStyle: 'preserve-3d',
-            transform: 'none',
-            opacity: 1,
-          }}
+    <>
+      <MenubarHome />
+      <section className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-950 text-white py-40 px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="text-center mb-20"
         >
-          <div className="mx-2 flex-1">
-            <div className="relative mt-2 aspect-[3/4] w-full">
-              <img
-                loading="lazy"
-                className="absolute inset-0 h-full w-full rounded-[16px] bg-[#000000] object-cover contrast-75"
-                alt="Invite background"
-                src="https://images.unsplash.com/photo-1505506874110-6a7a69069a08?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                style={{
-                  boxShadow: 'rgba(0, 0, 0, 0.05) 0px 5px 6px 0px',
-                  opacity: 1,
-                }}
-              />
-            </div>
-          </div>
-          <div className="mt-2 flex flex-shrink-0 items-center justify-between p-4 font-mono text-white">
-            <div className="text-xs">Comet Invitation</div>
-            <div className="text-xs text-gray-300 opacity-50">#F7RA</div>
-          </div>
-        </button>
-      </CometCard>
-    </div>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
+            Meus <span className="text-cyan-400">Projetos</span>
+          </h1>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Aqui estão alguns dos projetos que desenvolvi com foco em usabilidade, performance e
+            design moderno. 🚀
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
+          {PROJECTS.map((project, index) => (
+            <motion.div
+              key={project.title + index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"
+            >
+              <div className="relative w-full h-56 overflow-hidden">
+                <img
+                  src={project.images[0]}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              <div className="p-6 flex flex-col gap-3">
+                <h2 className="text-2xl font-semibold text-white">{project.title}</h2>
+                <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {project.technologies.map((tech, i) => (
+                    <img
+                      key={i}
+                      src={`https://cdn.simpleicons.org/${TECHNOLOGIES[tech].icon}`}
+                      alt={tech}
+                      className="size-6"
+                    />
+                  ))}
+                </div>
+                {/* <div className="flex flex-wrap gap-2 mt-3">
+                  {project.technologies.slice(0, 3).map((tech, i) => (
+                    <span
+                      key={i}
+                      className="text-xs px-3 py-1 rounded-full bg-gray-800 text-cyan-400 font-medium"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div> */}
+
+                {project.link && (
+                  <Link
+                    to={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
+                  >
+                    Ver projeto →
+                  </Link>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 
