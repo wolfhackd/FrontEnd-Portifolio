@@ -1,6 +1,12 @@
+import { useNavigate } from 'react-router';
 import { Button } from './ui/button';
 
 const MenubarHome = () => {
+  const navigate = useNavigate();
+
+  const handleClick = (link: string) => {
+    navigate(link);
+  };
   return (
     //TEnho que fazer um on click para cada botão (Talvez um novo componente)
 
@@ -15,30 +21,35 @@ const MenubarHome = () => {
         <Button
           variant={'link'}
           className="cursor-pointer rounded-full text-white hover:bg-[#8F9091] font-light"
+          onClick={() => handleClick('/')}
         >
           Home
         </Button>
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+          onClick={() => handleClick('/projetos')}
         >
           Sobre
         </Button>
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+          onClick={() => handleClick('/')}
         >
           Trabalho
         </Button>
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
+          onClick={() => handleClick('/')}
         >
           Mais
         </Button>
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white bg-[#8F9091] hover:bg-[#8F9091] font-light"
+          onClick={() => handleClick('/')}
         >
           Fale Comigo
         </Button>
