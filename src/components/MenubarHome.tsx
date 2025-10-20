@@ -28,14 +28,14 @@ const MenubarHome = () => {
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/projetos')}
+          onClick={() => handleClick('/')}
         >
           Sobre
         </Button>
         <Button
           variant={'link'}
           className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/')}
+          onClick={() => handleClick('/projetos')}
         >
           Trabalho
         </Button>

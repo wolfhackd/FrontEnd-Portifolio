@@ -57,21 +57,10 @@ const Works = () => {
                     />
                   ))}
                 </div>
-                {/* <div className="flex flex-wrap gap-2 mt-3">
-                  {project.technologies.slice(0, 3).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-3 py-1 rounded-full bg-gray-800 text-cyan-400 font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div> */}
 
-                {project.link && (
+                {project.id && (
                   <Link
-                    to={project.link}
-                    target="_blank"
+                    to={`/projeto/${project.id}`}
                     rel="noopener noreferrer"
                     className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
                   >

@@ -14,6 +14,7 @@ interface Project {
   images: string[];
   technologies: string[];
   link: string;
+  id: string;
 }
 
 export const TECHNOLOGIES: Technologies = {
@@ -74,6 +75,7 @@ export const TECHNOLOGIES: Technologies = {
 export const PROJECTS: Project[] = [
   {
     title: 'Let Me Ask',
+    id: '123',
     description:
       'O Let Me Ask é um app de perguntas e respostas em tempo real para lives e eventos, onde os participantes podem enviar questões, votar nas mais relevantes e acompanhar se já foram respondidas. A proposta é organizar a participação do público, promovendo engajamento e clareza na comunicação.',
     images: ['/letmeasktwo.jpeg', '/letmeaskone.jpeg'],
@@ -95,6 +97,7 @@ export const PROJECTS: Project[] = [
   },
   {
     title: 'Spotify',
+    id: '123',
     description: 'Website de música parecido com o spotify',
     images: ['/spotify.jpg', '/spotify2.jpg', '/spotify3.jpg'],
     technologies: [
@@ -113,6 +116,7 @@ export const PROJECTS: Project[] = [
   },
   {
     title: 'Portugenio',
+    id: '123',
     description:
       'O Portugenio é um projeto web voltado para o ensino e aprimoramento da língua portuguesa, com foco inicial na gramática. A plataforma utiliza inteligência artificial para oferecer correções automáticas, explicações personalizadas e exemplos práticos, tornando o aprendizado mais dinâmico e interativo.',
     images: ['/portugenio.jpeg', '/portugenio2.jpeg'],
@@ -124,122 +128,6 @@ export const PROJECTS: Project[] = [
       'fastify',
       'hooks',
       'gemini',
-      'node',
-      'shadcn',
-      'docker',
-    ],
-    link: 'https://github.com/wolfhackd/PortuGenio',
-  },
-  {
-    title: 'Let Me Ask',
-    description:
-      'O Let Me Ask é um app de perguntas e respostas em tempo real para lives e eventos, onde os participantes podem enviar questões, votar nas mais relevantes e acompanhar se já foram respondidas. A proposta é organizar a participação do público, promovendo engajamento e clareza na comunicação.',
-    images: ['/letmeasktwo.jpeg', '/letmeaskone.jpeg'],
-    technologies: [
-      'react',
-      'vite',
-      'typescript',
-      'tailwind',
-      'reactRouter',
-      'reactQuery',
-      'hooks',
-      'node',
-      'fastify',
-      'postgres',
-      'drizzle',
-      'zod',
-    ],
-    link: 'https://github.com/wolfhackd/let-me-ask',
-  },
-  {
-    title: 'Spotify',
-    description: 'Website de música parecido com o spotify',
-    images: ['/spotify.jpg', '/spotify2.jpg', '/spotify3.jpg'],
-    technologies: [
-      'react',
-      'vite',
-      'javascript',
-      'tailwind',
-      'reactRouter',
-      'hooks',
-      'node',
-      'express',
-      'mongodb',
-      'zod',
-    ],
-    link: 'https://github.com/wolfhackd/Spotify-Project',
-  },
-  {
-    title: 'Portugenio',
-    description:
-      'O Portugenio é um projeto web voltado para o ensino e aprimoramento da língua portuguesa, com foco inicial na gramática. A plataforma utiliza inteligência artificial para oferecer correções automáticas, explicações personalizadas e exemplos práticos, tornando o aprendizado mais dinâmico e interativo.',
-    images: ['/portugenio.jpeg', '/portugenio2.jpeg'],
-    technologies: [
-      'react',
-      'gemini',
-      'vite',
-      'typescript',
-      'tailwind',
-      'fastify',
-      'hooks',
-      'node',
-      'shadcn',
-      'docker',
-    ],
-    link: 'https://github.com/wolfhackd/PortuGenio',
-  },
-  {
-    title: 'Let Me Ask',
-    description:
-      'O Let Me Ask é um app de perguntas e respostas em tempo real para lives e eventos, onde os participantes podem enviar questões, votar nas mais relevantes e acompanhar se já foram respondidas. A proposta é organizar a participação do público, promovendo engajamento e clareza na comunicação.',
-    images: ['/letmeasktwo.jpeg', '/letmeaskone.jpeg'],
-    technologies: [
-      'react',
-      'vite',
-      'typescript',
-      'tailwind',
-      'reactRouter',
-      'reactQuery',
-      'hooks',
-      'node',
-      'fastify',
-      'postgres',
-      'drizzle',
-      'zod',
-    ],
-    link: 'https://github.com/wolfhackd/let-me-ask',
-  },
-  {
-    title: 'Spotify',
-    description: 'Website de música parecido com o spotify',
-    images: ['/spotify.jpg', '/spotify2.jpg', '/spotify3.jpg'],
-    technologies: [
-      'react',
-      'vite',
-      'javascript',
-      'tailwind',
-      'reactRouter',
-      'hooks',
-      'node',
-      'express',
-      'mongodb',
-      'zod',
-    ],
-    link: 'https://github.com/wolfhackd/Spotify-Project',
-  },
-  {
-    title: 'Portugenio',
-    description:
-      'O Portugenio é um projeto web voltado para o ensino e aprimoramento da língua portuguesa, com foco inicial na gramática. A plataforma utiliza inteligência artificial para oferecer correções automáticas, explicações personalizadas e exemplos práticos, tornando o aprendizado mais dinâmico e interativo.',
-    images: ['/portugenio.jpeg', '/portugenio2.jpeg'],
-    technologies: [
-      'react',
-      'gemini',
-      'vite',
-      'typescript',
-      'tailwind',
-      'fastify',
-      'hooks',
       'node',
       'shadcn',
       'docker',
