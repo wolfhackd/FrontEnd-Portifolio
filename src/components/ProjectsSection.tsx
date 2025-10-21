@@ -7,7 +7,7 @@ import { StickyScroll } from './sticky-scroll-reveal';
 export function ProjectsSection() {
   return (
     <>
-      <section className="">
+      <section className="poppins-regular">
         <StickyScroll content={PROJECTS} />
       </section>
     </>

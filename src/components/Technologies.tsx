@@ -3,7 +3,7 @@ import { TECHNOLOGIES } from '../../db';
 
 export default function Technologies() {
   return (
-    <section className="relative overflow-hidden py-28 text-white bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800">
+    <section className="relative overflow-hidden py-28 text-white bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800 poppins-regular">
       {/* Fundo sutil animado */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_70%)]" />
 

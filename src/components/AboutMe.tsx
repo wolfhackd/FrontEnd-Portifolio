@@ -9,7 +9,7 @@ export const handleClick = (link: string) => {
 
 export const AboutMe = () => {
   return (
-    <section className="w-full flex justify-center py-20 bg-transparent relative">
+    <section className="w-full flex justify-center py-20 bg-transparent relative poppins-regular">
       <motion.div
         className="max-w-3xl text-center px-auto space-y-6 z-4000"
         initial={{ opacity: 0, y: 40 }}

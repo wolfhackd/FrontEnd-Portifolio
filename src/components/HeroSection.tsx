@@ -49,7 +49,7 @@ const words = [
 
 const HeroSection = () => {
   return (
-    <section className="flex flex-col w-full pb-10 h-screen relative text-white overflow-hidden">
+    <section className="flex flex-col w-full pb-10 h-screen relative text-white overflow-hidden poppins-regular ">
       {/* motion.div substitui o container principal */}
       <motion.div
         className="flex flex-col items-center space-y-12 pt-[18%] z-40"
