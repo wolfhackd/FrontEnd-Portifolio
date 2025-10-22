@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 import { PROJECTS } from '../../db';
 import { Badge } from '@/components/ui/badge';
 import FooterSection from '@/components/FooterSection';
-import { AlertCircle } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
