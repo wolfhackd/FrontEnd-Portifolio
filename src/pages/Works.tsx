@@ -1,5 +1,5 @@
 import { PROJECTS, TECHNOLOGIES } from '../../db';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import MenubarHome from '@/components/MenubarHome';
 
@@ -28,7 +28,8 @@ const Works = () => {
             <motion.div
               key={project.title + index}
               initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              // whileInView={{ opacity: 1, y: 0 }} Está dando erro quando uso o nav ele não carrega
+              animate={{ opacity: 1, y: 0 }} //Solução para o erro acima
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"

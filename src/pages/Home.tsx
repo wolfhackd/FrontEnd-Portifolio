@@ -11,7 +11,8 @@ const Home = () => {
     <>
       <MenubarHome />
       <Toaster />
-      <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-gray-900">
+      {/* <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-gray-900"> */}
+      <div className="bg-[#0B2545]">
         {/* <div> */}
         <HeroSection />
         <AboutMe />

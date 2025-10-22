@@ -11,8 +11,8 @@ const FooterSection = () => {
   const letMeTalk = [{ name: 'Home', href: '/' }];
 
   return (
-    <footer className="flex flex-col p-10 justify-between space-y-20 w-full bg-[#e6e6e6]">
-      <div className="flex justify-between border-b border-black pb-6">
+    <footer className="flex flex-col p-10 justify-between space-y-20 w-full bg-[#13315C] text-[#EEF4ED]">
+      <div className="flex justify-between border-b border-[#EEF4ED] pb-6">
         <div className="flex items-center space-x-4 justify-start">
           <img src="/logoML.png" alt="Logo pessoal ML" className="w-7 h-7" />
           <p className="font-bold">Mauro Leal</p>

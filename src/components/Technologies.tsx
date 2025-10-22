@@ -3,7 +3,8 @@ import { TECHNOLOGIES } from '../../db';
 
 export default function Technologies() {
   return (
-    <section className="relative overflow-hidden py-28 text-white bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800 poppins-regular">
+    // <section className="relative overflow-hidden py-28 text-white bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800 poppins-regular">
+    <section className="relative overflow-hidden py-28 text-[#EEF4ED] bg-[#134074] poppins-regular">
       {/* Fundo sutil animado */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_70%)]" />
 
@@ -31,7 +32,7 @@ export default function Technologies() {
             visible: { opacity: 1, x: 0 },
           }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-          className="text-gray-400 max-w-2xl"
+          className="text-[#8DA9C4] max-w-2xl"
         >
           Ferramentas e linguagens que fazem parte do meu dia a dia como desenvolvedor.
         </motion.p>
@@ -52,7 +53,7 @@ export default function Technologies() {
           {Object.values(TECHNOLOGIES).map((tech, index) => (
             <div
               key={`tech-${index}`}
-              className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300"
+              className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300 poppins-regular"
             >
               <div className="text-6xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
                 <img
@@ -68,7 +69,7 @@ export default function Technologies() {
           {Object.values(TECHNOLOGIES).map((tech, index) => (
             <div
               key={`tech-dup-${index}`}
-              className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300"
+              className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300 poppins-regular"
             >
               <div className="w-10 h-10">
                 <img
@@ -82,8 +83,8 @@ export default function Technologies() {
           ))}
         </motion.div>
 
-        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-slate-950 to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-slate-950 to-transparent pointer-events-none" />
+        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-[#13315C] to-transparent pointer-events-none" />
+        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-[#13315C] to-transparent pointer-events-none" />
       </div>
     </section>
   );

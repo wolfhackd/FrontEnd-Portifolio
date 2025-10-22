@@ -1,65 +1,45 @@
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 
 const MenubarHome = () => {
-  const navigate = useNavigate();
-
-  const handleClick = (link: string) => {
-    navigate(link);
-  };
   return (
-    //TEnho que fazer um on click para cada botão (Talvez um novo componente)
+    <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed z-5000 justify-between w-full">
+      <img src="/logoML.png" className="size-10 mx-6" />
 
-    <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed z-5000 justify-between w-full ">
-      <img
-        src="/logoML.png"
-        className="size-10 mx-6 
-      "
-      />
-
-      <nav className="bg-[#ADADAE] rounded-full border-2 border-black self-center ">
-        <Button
-          variant={'link'}
-          className="cursor-pointer rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/')}
-        >
-          Home
-        </Button>
-        <Button
-          variant={'link'}
-          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/')}
-        >
-          Sobre
-        </Button>
-        <Button
-          variant={'link'}
-          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/projetos')}
-        >
-          Trabalho
-        </Button>
-        <Button
-          variant={'link'}
-          className="cursor-pointer  rounded-full text-white hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/')}
-        >
-          Mais
-        </Button>
-        <Button
-          variant={'link'}
-          className="cursor-pointer  rounded-full text-white bg-[#8F9091] hover:bg-[#8F9091] font-light"
-          onClick={() => handleClick('/')}
-        >
-          Fale Comigo
-        </Button>
+      <nav className="bg-[#ADADAE] rounded-full border-2 border-black self-center">
+        <Link to="/">
+          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+            Home
+          </Button>
+        </Link>
+        <Link to="/sobre">
+          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+            Sobre
+          </Button>
+        </Link>
+        <Link to="/projetos">
+          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+            Trabalho
+          </Button>
+        </Link>
+        <Link to="/mais">
+          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+            Mais
+          </Button>
+        </Link>
+        <Link to="/contato">
+          <Button
+            variant="link"
+            className="text-white bg-[#8F9091] hover:bg-[#8F9091] font-light rounded-full"
+          >
+            Fale Comigo
+          </Button>
+        </Link>
       </nav>
 
       <p>
-        <span className="text-green-500">C</span>
-        <span>ode</span>
-        <span className="text-green-500">W</span>
-        <span>ay</span>
+        <span className="text-green-500">C</span>ode
+        <span className="text-green-500">W</span>ay
         <span className="text-green-500">_</span>
       </p>
     </div>

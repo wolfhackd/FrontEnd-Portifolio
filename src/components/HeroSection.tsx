@@ -61,12 +61,7 @@ const HeroSection = () => {
           Transformamos suas ideias em código
         </h2>
 
-        {/* <p className="text-2xl md:text-3xl font-light text-center max-w-2xl leading-relaxed">
-          Olá, meu nome é <span className="font-medium">Mauro Leal</span> e sou desenvolvedor
-          Fullstack.
-        </p> */}
-
-        <TypewriterEffect words={words} className="text-white" />
+        <TypewriterEffect words={words} className="text-[#EEF4ED]" />
 
         <motion.div
           className="flex gap-10"
