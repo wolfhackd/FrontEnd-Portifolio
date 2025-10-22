@@ -8,29 +8,41 @@ const MenubarHome = () => {
 
       <nav className="bg-[#ADADAE] rounded-full border-2 border-black self-center">
         <Link to="/">
-          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+          <Button
+            variant="link"
+            className="text-white hover:bg-[#8F9091] font-light rounded-full  cursor-pointer"
+          >
             Home
           </Button>
         </Link>
         <Link to="/sobre">
-          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+          <Button
+            variant="link"
+            className="text-white hover:bg-[#8F9091] font-light rounded-full  cursor-pointer"
+          >
             Sobre
           </Button>
         </Link>
         <Link to="/projetos">
-          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+          <Button
+            variant="link"
+            className="text-white hover:bg-[#8F9091] font-light rounded-full  cursor-pointer"
+          >
             Trabalho
           </Button>
         </Link>
         <Link to="/mais">
-          <Button variant="link" className="text-white hover:bg-[#8F9091] font-light rounded-full">
+          <Button
+            variant="link"
+            className="text-white hover:bg-[#8F9091] font-light rounded-full  cursor-pointer"
+          >
             Mais
           </Button>
         </Link>
         <Link to="/contato">
           <Button
             variant="link"
-            className="text-white bg-[#8F9091] hover:bg-[#8F9091] font-light rounded-full"
+            className="text-white bg-[#8F9091] hover:bg-[#8F9091] font-light rounded-full cursor-pointer"
           >
             Fale Comigo
           </Button>

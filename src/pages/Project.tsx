@@ -9,6 +9,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+
+//falta implementar algumas funções, pois o banco ainda não foi construido
 
 const Project = () => {
   //não estou usando ainda, porem funciona
@@ -17,25 +20,36 @@ const Project = () => {
   // Chamada de teste
   const project = PROJECTS[2];
 
+  const handleClick = () => {
+    window.open(project.link, '_blank');
+  };
+
   return (
     <>
       <MenubarHome />
-      <div className="relative pt-30 flex flex-col justify-between p-[15%] bg-gradient-to-b from-[#CCD0CF] via-[#4a5c6a] to-[#11212d] space-y-6 poppins-medium ">
-        <h1 className="text-left font-bold text-5xl">{project.title}</h1>
-        <p className="text-muted-foreground text-md">{project.fastDescription}</p>
-        {/* Map de badge com technologias do projeto */}
-        <div className="flex gap-3">
-          {project.technologies.map((tech, i) => {
-            return (
-              <Badge key={i} className="uppercase">
-                {tech}
-              </Badge>
-            );
-          })}
+      <div className="relative pt-30 flex flex-col justify-between p-[15%] text-[#EEF4ED] bg-[#134074] space-y-6 poppins-medium">
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-left font-bold text-5xl ">{project.title}</h1>
+            <p className=" text-md">{project.fastDescription}</p>
+            {/* Map de badge com technologias do projeto */}
+            <div className="flex gap-3">
+              {project.technologies.map((tech, i) => {
+                return (
+                  <Badge key={i} className="uppercase">
+                    {tech}
+                  </Badge>
+                );
+              })}
+            </div>
+          </div>
+          <Button className="cursor-pointer poppins-medium justify-end" onClick={handleClick}>
+            Ver Codigo ↗
+          </Button>
         </div>
         {/* data do projeto */}
         <p>Postado em: {project.created}</p>
-        {/* imagem */}
+
         <img
           src={`${project.images[0]}`}
           alt={`Imagem do projeto ${project.title}`}
@@ -43,19 +57,19 @@ const Project = () => {
         />
         {/* Visão geral */}
         <h2 className="text-4xl font-bold">🥽Visão Geral</h2>
-        <div className="bg-[#F1F1F1] p-2 rounded-md flex">
-          <blockquote className="text-gray-500 text-lg italic border-l-4 border-blue-600 pl-4 bg-accent rounded-r-md">
+        <div className="bg-[#EEF4ED] p-2 rounded-md flex">
+          <blockquote className=" text-[#0B2545] text-lg italic border-l-4 border-blue-600 pl-4 bg-accent rounded-r-md">
             {project.overview}
           </blockquote>
         </div>
         {/* techstack com desc */}
         <h2 className="text-4xl font-bold">🤖Tecnologias</h2>
-        <ul className="bg-[#F1F1F1] p-2 rounded-md">
+        <ul className="bg-[#EEF4ED] p-2 rounded-md border-l-4 border-blue-600 pl-4">
           {project.technologies.map((tech) => {
             return (
               <li
                 key={tech}
-                className="capitalize className=text-gray-500 text-lg italic border-l-4 border-blue-600 pl-4 bg-accent rounded-r-md underline mb-2 hover:text-muted-foreground cursor-pointer"
+                className="capitalize text-lg italic  rounded-r-md mb-2 hover:text-muted-foreground cursor-pointer text-[#0B2545]"
               >
                 {tech}
               </li>
@@ -70,12 +84,12 @@ const Project = () => {
               <AccordionItem
                 value={`item-${i}`}
                 key={`${challenge.title}-${i}`}
-                className="mb-4 border rounded-md p-2 poppins-medium bg-[#F1F1F1] cursor-pointer"
+                className="mb-4 border rounded-md p-2 poppins-medium bg-[#EEF4ED] cursor-pointer"
               >
-                <AccordionTrigger className="cursor-pointer border-l-4 border-blue-600 rounded-none pl-2">
+                <AccordionTrigger className="cursor-pointer border-l-4 border-blue-600 rounded-none pl-2 text-[#0B2545]">
                   {challenge.title}
                 </AccordionTrigger>
-                <AccordionContent className="cursor-pointer border-l-4 border-blue-600 pl-2">
+                <AccordionContent className="cursor-pointer border-l-4 border-blue-600 pl-2 text-[#0B2545]">
                   {challenge.text}
                 </AccordionContent>
               </AccordionItem>
