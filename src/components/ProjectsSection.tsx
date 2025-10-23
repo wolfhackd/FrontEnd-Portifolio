@@ -75,6 +75,18 @@ export function ProjectsSection() {
           </motion.div>
         ))}
       </div>
+      <motion.div
+        className="text-center mt-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <Link to="/projetos">
+          <button className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-semibold rounded-full shadow-md hover:shadow-cyan-500/20 transition-all duration-300 cursor-pointer">
+            Ver mais projetos →
+          </button>
+        </Link>
+      </motion.div>
     </motion.section>
   );
 }
