@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
+import { MenuModal } from './MenuModal';
 
 const MenubarHome = () => {
   return (
     <div className="backdrop-blur-sm from-gray-900 via-gray-800 to-transparent flex p-4 fixed z-5000 justify-between w-full">
       <img src="/logoML.png" className="size-10 mx-6" />
-
       <nav className="bg-[#ADADAE] rounded-full border-2 border-black self-center">
         <Link to="/">
           <Button
@@ -48,12 +48,7 @@ const MenubarHome = () => {
           </Button>
         </Link>
       </nav>
-
-      <p>
-        <span className="text-green-500">C</span>ode
-        <span className="text-green-500">W</span>ay
-        <span className="text-green-500">_</span>
-      </p>
+      <MenuModal />
     </div>
   );
 };

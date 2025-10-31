@@ -2,10 +2,7 @@ import { motion } from 'motion/react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { Github, Linkedin } from 'lucide-react';
 import { StarsBackground } from './ui/stars-background';
-
-export const handleClick = (link: string) => {
-  window.open(`${link}`, '_blanck');
-};
+import { handleLink } from '@/utils/handleLink';
 
 export const AboutMe = () => {
   return (
@@ -41,7 +38,7 @@ export const AboutMe = () => {
           <HoverCard>
             <HoverCardTrigger
               className="cursor-pointer"
-              onClick={() => handleClick('https://www.linkedin.com/in/mauro-leal-b1134425a/')}
+              onClick={() => handleLink('https://www.linkedin.com/in/mauro-leal-b1134425a/')}
             >
               <Linkedin />
             </HoverCardTrigger>
@@ -52,7 +49,7 @@ export const AboutMe = () => {
           <HoverCard>
             <HoverCardTrigger
               className="cursor-pointer"
-              onClick={() => handleClick('https://github.com/wolfhackd')}
+              onClick={() => handleLink('https://github.com/wolfhackd')}
             >
               <Github />
             </HoverCardTrigger>

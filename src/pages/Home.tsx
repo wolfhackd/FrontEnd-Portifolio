@@ -5,6 +5,7 @@ import { ProjectsSection } from '@/components/ProjectsSection';
 import { AboutMe } from '@/components/AboutMe';
 import HeroSection from '@/components/HeroSection';
 import FooterSection from '@/components/FooterSection';
+import FileUploader from '@/components/FileUploader';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
         <Technologies />
         <ProjectsSection />
         <FooterSection />
+        {/* <FileUploader /> */}
       </div>
     </>
   );
