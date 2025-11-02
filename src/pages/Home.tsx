@@ -5,7 +5,7 @@ import { ProjectsSection } from '@/components/ProjectsSection';
 import { AboutMe } from '@/components/AboutMe';
 import HeroSection from '@/components/HeroSection';
 import FooterSection from '@/components/FooterSection';
-import FileUploader from '@/components/FileUploader';
+// import FileUploader from '@/components/FileUploader';
 
 const Home = () => {
   return (

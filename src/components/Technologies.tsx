@@ -1,9 +1,33 @@
 import { motion } from 'framer-motion';
-import { TECHNOLOGIES } from '../../db';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+// import { TECHNOLOGIES } from '../../db';
+
+interface Technology {
+  id: string;
+  name: string;
+  color: string;
+  icon: string;
+}
 
 export default function Technologies() {
+  const [TECHNOLOGIES, setTECHNOLOGIES] = useState<Technology[]>([]);
+
+  useEffect(() => {
+    const fetchTechnologies = async () => {
+      try {
+        const response = await axios.get<Technology[]>(`${import.meta.env.VITE_API}/technologies`);
+        setTECHNOLOGIES(response.data);
+        console.log(response.data);
+      } catch {
+        console.error('Não foi possível fazer o fetch das tecnologias');
+      }
+    };
+
+    fetchTechnologies();
+  }, []);
+
   return (
-    // <section className="relative overflow-hidden py-28 text-white bg-gradient-to-t from-slate-950 via-slate-900 to-slate-800 poppins-regular">
     <section className="relative overflow-hidden py-28 text-[#EEF4ED] bg-[#134074] poppins-regular">
       {/* Fundo sutil animado */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_70%)]" />
@@ -50,9 +74,9 @@ export default function Technologies() {
           }}
           viewport={{ once: true }}
         >
-          {Object.values(TECHNOLOGIES).map((tech, index) => (
+          {TECHNOLOGIES.map((tech, index) => (
             <div
-              key={`tech-${index}`}
+              key={`tech-${tech.id}-${index}`}
               className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300 poppins-regular"
             >
               <div className="text-6xl drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
@@ -66,9 +90,9 @@ export default function Technologies() {
             </div>
           ))}
 
-          {Object.values(TECHNOLOGIES).map((tech, index) => (
+          {TECHNOLOGIES.map((tech, index) => (
             <div
-              key={`tech-dup-${index}`}
+              key={`tech-dup-${tech.id}-${index}`}
               className="flex flex-col items-center justify-center min-w-[120px] hover:scale-110 transition-transform duration-300 poppins-regular"
             >
               <div className="w-10 h-10">
