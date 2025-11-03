@@ -5,6 +5,7 @@ import Works from './pages/Works';
 import Project from './pages/Project';
 import { PrivateRoute } from './middleware/PrivateRoutes';
 import Dashboard from './pages/Dashboard';
+import AuthCallback from './pages/AuthCallback';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/projetos" element={<Works />} />
       <Route path="/projeto/:id" element={<Project />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
       <Route
         path="/dashboard"
         element={
@@ -20,6 +22,7 @@ function App() {
           </PrivateRoute>
         }
       />
+      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   );
 }

@@ -7,7 +7,6 @@ import {
   Info,
   Link as LinkIcon,
   List,
-  LogIn,
   Mail,
 } from 'lucide-react';
 import { useState } from 'react';
