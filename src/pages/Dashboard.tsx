@@ -9,6 +9,19 @@ export default function Dashboard() {
 
   return (
     <main className="flex-1 overflow-y-auto">
+      {/* Header */}
+      <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Projetos</h1>
+          <p className="text-sm text-muted-foreground">
+            Gerencie e publique seus projetos pessoais
+          </p>
+        </div>
+        <Button className="flex items-center gap-2">
+          <Plus size={18} /> Novo Projeto
+        </Button>
+      </header>
+
       {/* Grid de projetos */}
       <section className="p-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

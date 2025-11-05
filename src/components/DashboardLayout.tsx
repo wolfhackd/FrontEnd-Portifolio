@@ -5,7 +5,6 @@ import { Cpu, FolderGit2, LogOut, Plus, Settings } from 'lucide-react';
 export function DashboardLayout() {
   return (
     <div className="flex h-screen bg-muted/10">
-      {/* Sidebar */}
       <aside className="w-64 bg-background border-r border-border flex flex-col justify-between">
         <div>
           <div className="p-6">
@@ -34,9 +33,7 @@ export function DashboardLayout() {
         </div>
       </aside>
 
-      {/* Conteúdo principal */}
-      <main className="flex-1 overflow-y-auto">
-        {/* Header */}
+      {/* <main className="flex-1 overflow-y-auto">
         <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Projetos</h1>
@@ -44,17 +41,17 @@ export function DashboardLayout() {
               Gerencie e publique seus projetos pessoais
             </p>
           </div>
-          {/* Botão do dialog */}
+       
           <Button className="flex items-center gap-2">
             <Plus size={18} /> Novo Projeto
           </Button>
         </header>
 
-        {/* Grid de projetos */}
         <section className="p-8">
           <Outlet />
         </section>
-      </main>
+      </main> */}
+      <Outlet />
     </div>
   );
 }
