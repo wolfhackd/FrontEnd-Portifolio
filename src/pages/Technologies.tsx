@@ -41,6 +41,43 @@ export default function Technologies() {
 
   return (
     <main className="flex-1 overflow-y-auto">
+      {/* Header */}
+      <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Tecnologias</h1>
+          <p className="text-sm text-muted-foreground">
+            Adicione, edite ou remova suas tecnologias
+          </p>
+        </div>
+
+        {/* Botão de nova tecnologia */}
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button className="flex items-center gap-2">
+              <Plus size={18} /> Nova tecnologia
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Adicionar nova tecnologia</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-4 mt-2">
+              <Input
+                placeholder="Nome da tecnologia"
+                value={newTech.name}
+                onChange={(e) => setNewTech({ ...newTech, name: e.target.value })}
+              />
+              <Input
+                placeholder="Categoria (ex: Frontend, Backend)"
+                value={newTech.category}
+                onChange={(e) => setNewTech({ ...newTech, category: e.target.value })}
+              />
+              <Button onClick={handleCreate}>Salvar</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </header>
+
       {/* Lista de tecnologias */}
       <section className="p-8">
         {technologies.length === 0 ? (
