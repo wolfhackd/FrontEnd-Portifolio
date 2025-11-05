@@ -1,8 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Cpu, FolderGit2, LogOut, Plus, Settings } from 'lucide-react';
 
 export function DashboardLayout() {
+  const navigate = useNavigate();
+
+  const handleClick = (link: string) => {
+    navigate(link);
+  };
+
+  //Anotações importantes
+  // Tenho que fazer o handle logout e tratar no back end tbm(eu acho)
+
   return (
     <div className="flex h-screen bg-muted/10">
       <aside className="w-64 bg-background border-r border-border flex flex-col justify-between">
@@ -12,10 +21,18 @@ export function DashboardLayout() {
             <p className="text-sm text-muted-foreground">Gerencie seu portfólio</p>
           </div>
           <nav className="flex flex-col gap-1 px-3">
-            <Button variant="ghost" className="justify-start gap-2">
+            <Button
+              variant="ghost"
+              className="justify-start gap-2"
+              onClick={() => handleClick('/dashboard')}
+            >
               <FolderGit2 size={18} /> Projetos
             </Button>
-            <Button variant="ghost" className="justify-start gap-2">
+            <Button
+              variant="ghost"
+              className="justify-start gap-2"
+              onClick={() => handleClick('/dashboard/technologies')}
+            >
               <Cpu size={18} /> Tecnologias
             </Button>
             <Button variant="ghost" className="justify-start gap-2">
@@ -33,24 +50,6 @@ export function DashboardLayout() {
         </div>
       </aside>
 
-      {/* <main className="flex-1 overflow-y-auto">
-        <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Projetos</h1>
-            <p className="text-sm text-muted-foreground">
-              Gerencie e publique seus projetos pessoais
-            </p>
-          </div>
-       
-          <Button className="flex items-center gap-2">
-            <Plus size={18} /> Novo Projeto
-          </Button>
-        </header>
-
-        <section className="p-8">
-          <Outlet />
-        </section>
-      </main> */}
       <Outlet />
     </div>
   );
