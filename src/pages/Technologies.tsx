@@ -1,46 +1,93 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Trash2, Cpu } from 'lucide-react';
+import { NewTechnologyModal } from '@/components/NewTechnologieModal';
+import axios from 'axios';
+import { toast, Toaster } from 'sonner';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Trash2, Cpu } from 'lucide-react';
 
 interface Technology {
-  id: number;
+  id: string;
   name: string;
-  category: string;
+  categoryID: string;
+  category: {
+    id: string;
+    name: string;
+  };
 }
 
+type newTech = {
+  name: string;
+  icon: string;
+  color: string;
+};
+
 export default function Technologies() {
-  // Mock temporário
-  const [technologies, setTechnologies] = useState<Technology[]>([
-    { id: 1, name: 'React', category: 'Frontend' },
-    { id: 2, name: 'Node.js', category: 'Backend' },
-    { id: 3, name: 'Prisma', category: 'ORM' },
-  ]);
-
+  const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [open, setOpen] = useState(false);
-  const [newTech, setNewTech] = useState({ name: '', category: '' });
 
-  // tu vai implementar essas funções dps
-  const handleCreate = () => {
-    console.log('Criar tecnologia:', newTech);
-    setNewTech({ name: '', category: '' });
-    setOpen(false);
+  // 🔹 Buscar tecnologias ao carregar a página
+  const fetchTechnologies = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API}/technologies`, {
+        withCredentials: true,
+      });
+      setTechnologies(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar tecnologias:', error);
+    }
   };
 
-  const handleDelete = (id: number) => {
-    console.log('Excluir tecnologia:', id);
+  useEffect(() => {
+    fetchTechnologies();
+  }, []);
+
+  const handleCreate = async (tech: newTech) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_API}/technologies`, tech, {
+        withCredentials: true,
+      });
+      fetchTechnologies();
+      setOpen(false);
+      toast.success('Tecnologia criada com sucesso');
+    } catch (error) {
+      console.error('Erro ao criar tecnologia:', error);
+    }
+  };
+
+  // 🔹 Deletar tecnologia
+  const deleteTechnology = async (technologyId: string) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API}/technologies-delete`,
+        {
+          id: technologyId,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      console.log(response.data);
+      // Atualiza a lista depois de excluir
+      fetchTechnologies();
+      toast.success('Tecnologia deletada com sucesso');
+    } catch (error) {
+      console.error('Erro ao deletar tecnologia:', error);
+    }
   };
 
   return (
     <main className="flex-1 overflow-y-auto">
+      <Toaster />
+
       {/* Header */}
       <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
         <div>
@@ -50,32 +97,7 @@ export default function Technologies() {
           </p>
         </div>
 
-        {/* Botão de nova tecnologia */}
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
-              <Plus size={18} /> Nova tecnologia
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Adicionar nova tecnologia</DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-col gap-4 mt-2">
-              <Input
-                placeholder="Nome da tecnologia"
-                value={newTech.name}
-                onChange={(e) => setNewTech({ ...newTech, name: e.target.value })}
-              />
-              <Input
-                placeholder="Categoria (ex: Frontend, Backend)"
-                value={newTech.category}
-                onChange={(e) => setNewTech({ ...newTech, category: e.target.value })}
-              />
-              <Button onClick={handleCreate}>Salvar</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <NewTechnologyModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
       </header>
 
       {/* Lista de tecnologias */}
@@ -95,12 +117,41 @@ export default function Technologies() {
                     <h3 className="font-semibold">{tech.name}</h3>
                   </div>
                   <Badge variant="secondary" className="mt-2">
-                    {tech.category}
+                    {tech.category.name}
                   </Badge>
                 </div>
-                <Button size="icon" variant="ghost" onClick={() => handleDelete(tech.id)}>
-                  <Trash2 size={18} className="text-destructive" />
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button size="icon" variant="ghost">
+                      <Trash2 size={18} className="text-destructive" />
+                    </Button>
+                  </DialogTrigger>
+
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Você realmente deseja excluir?</DialogTitle>
+                      <DialogDescription>
+                        Essa ação apagará a tecnologia <strong>{tech.name}</strong> permanentemente.
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="flex justify-end gap-2 mt-4">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          // Fecha o diálogo sem excluir
+                          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+                        }}
+                      >
+                        Cancelar
+                      </Button>
+
+                      <Button variant="destructive" onClick={() => deleteTechnology(tech.id)}>
+                        Excluir
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             ))}
           </div>

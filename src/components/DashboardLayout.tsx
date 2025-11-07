@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Cpu, FolderGit2, LogOut, Plus, Settings } from 'lucide-react';
+import { Cpu, FolderGit2, LogOut, Settings } from 'lucide-react';
 
 export function DashboardLayout() {
   const navigate = useNavigate();
