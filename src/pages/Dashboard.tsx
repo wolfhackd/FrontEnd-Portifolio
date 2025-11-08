@@ -1,11 +1,43 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Settings, FolderGit2, Cpu, LogOut } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { PROJECTS } from '../../db';
+import { Dialog, DialogHeader } from '@/components/ui/dialog';
+import {
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { NewProjectModal } from '@/components/NewProjectModal';
 
 export default function Dashboard() {
-  const [projects] = useState(PROJECTS);
+  const [projects, setProjects] = useState(PROJECTS);
+  const [open, setOpen] = useState(false);
+
+  // Criação de um novo projeto
+  const handleCreate = (newProject: any) => {
+    setProjects((prev) => [
+      ...prev,
+      {
+        ...newProject,
+        id: crypto.randomUUID(),
+        created: new Date().toLocaleDateString('pt-BR'),
+      },
+    ]);
+    setOpen(false);
+  };
+
+  // Exclusão de projeto
+  // const deleteProject = (id: string) => {
+  //   setProjects((prev) => prev.filter((p) => p.id !== id));
+  // };
+
+  const deleteProject = (id: string) => {
+    console.log(id);
+    //Depois terminar
+  };
 
   return (
     <main className="flex-1 overflow-y-auto">
@@ -17,9 +49,10 @@ export default function Dashboard() {
             Gerencie e publique seus projetos pessoais
           </p>
         </div>
-        <Button className="flex items-center gap-2">
+        {/* <Button className="flex items-center gap-2">
           <Plus size={18} /> Novo Projeto
-        </Button>
+        </Button> */}
+        <NewProjectModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
       </header>
 
       {/* Grid de projetos */}
@@ -49,9 +82,42 @@ export default function Dashboard() {
                 <Button variant="outline" size="sm">
                   Editar
                 </Button>
-                <Button variant="destructive" size="sm">
-                  Excluir
-                </Button>
+
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="destructive" size="sm">
+                      Excluir
+                    </Button>
+                  </DialogTrigger>
+
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Você realmente deseja excluir?</DialogTitle>
+                      <DialogDescription>
+                        Essa ação apagará a tecnologia <strong>{p.title}</strong> permanentemente.
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="flex justify-end gap-2 mt-4">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+                        }}
+                      >
+                        Cancelar
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        onClick={() => {
+                          deleteProject(p.id);
+                        }}
+                      >
+                        Excluir
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           ))}

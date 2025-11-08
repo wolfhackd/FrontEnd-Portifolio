@@ -63,7 +63,6 @@ export default function Technologies() {
     }
   };
 
-  // 🔹 Deletar tecnologia
   const deleteTechnology = async (technologyId: string) => {
     try {
       const response = await axios.post(
@@ -139,7 +138,6 @@ export default function Technologies() {
                       <Button
                         variant="outline"
                         onClick={() => {
-                          // Fecha o diálogo sem excluir
                           document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
                         }}
                       >

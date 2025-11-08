@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 
 const Project = () => {
   //não estou usando ainda, porem funciona
-  const { id } = useParams();
+  // const { id } = useParams();
 
   // Chamada de teste
   const project = PROJECTS[2];
@@ -32,7 +32,7 @@ const Project = () => {
           <div>
             <h1 className="text-left font-bold text-5xl ">{project.title}</h1>
             <p className=" text-md">{project.fastDescription}</p>
-            {/* Map de badge com technologias do projeto */}
+            {/* Map de badge com tecnologias do projeto */}
             <div className="flex gap-3">
               {project.technologies.map((tech, i) => {
                 return (
@@ -44,7 +44,7 @@ const Project = () => {
             </div>
           </div>
           <Button className="cursor-pointer poppins-medium justify-end" onClick={handleClick}>
-            Ver Codigo ↗
+            Ver Código ↗
           </Button>
         </div>
         {/* data do projeto */}
