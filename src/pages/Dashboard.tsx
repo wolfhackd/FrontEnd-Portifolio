@@ -19,7 +19,6 @@ interface fetchProject extends Project {
 }
 
 export default function Dashboard() {
-  //Falta o fetch de projetos
   const [projects, setProjects] = useState<fetchProject[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -28,19 +27,23 @@ export default function Dashboard() {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
       setProjects(response.data as fetchProject[]);
-      // console.log(response.data);
     } catch {
       console.error('Erro ao buscar projetos');
     }
   };
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  const dateFormater = (date: string) => {
+    const createdDate = new Date(date);
+    const formatedDate = createdDate.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
 
-  // Criação de um novo projeto
+    return formatedDate;
+  };
+
   const handleCreate = async (newProject: Project) => {
-    // console.log(newProject);
     try {
       await axios.post(`${import.meta.env.VITE_API}/projects`, newProject, {
         withCredentials: true,
@@ -53,10 +56,19 @@ export default function Dashboard() {
     }
   };
 
+  //Depois terminar
   const deleteProject = (id: string) => {
     console.log(id);
-    //Depois terminar
   };
+
+  // -------------------Área de testes---------------------
+
+  //----------------------------------------------------------
+
+  //Inicializações
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   return (
     <main className="flex-1 overflow-y-auto">
@@ -69,9 +81,6 @@ export default function Dashboard() {
             Gerencie e publique seus projetos pessoais
           </p>
         </div>
-        {/* <Button className="flex items-center gap-2">
-          <Plus size={18} /> Novo Projeto
-        </Button> */}
         <NewProjectModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
       </header>
 
@@ -96,7 +105,9 @@ export default function Dashboard() {
                   ))} */}
                 </div>
 
-                <p className="text-xs text-muted-foreground">Criado em: {p.created}</p>
+                <p className="text-xs text-muted-foreground">
+                  Criado em: {dateFormater(p.created)}
+                </p>
               </div>
 
               <div className="flex justify-end gap-2 mt-4">

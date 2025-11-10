@@ -10,20 +10,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Plus } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select';
+import { useState } from 'react';
 
-interface Technology {
-  id: string;
-  name: string;
-}
+// interface Technology {
+//   id: string;
+//   name: string;
+// }
 
 export interface Project {
   title: string;
