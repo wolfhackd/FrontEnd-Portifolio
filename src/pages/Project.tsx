@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 
-//falta implementar algumas funções, pois o banco ainda não foi construido
+//falta implementar algumas funções, pois o banco ainda não foi construído
 
 const Project = () => {
   //não estou usando ainda, porem funciona

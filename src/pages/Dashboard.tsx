@@ -1,8 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Plus } from 'lucide-react';
-import { PROJECTS } from '../../db';
 import { Dialog, DialogHeader } from '@/components/ui/dialog';
 import {
   DialogContent,
@@ -10,29 +7,51 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { NewProjectModal } from '@/components/NewProjectModal';
+import { NewProjectModal, type Project } from '@/components/NewProjectModal';
+import axios from 'axios';
+import { toast, Toaster } from 'sonner';
+
+interface fetchProject extends Project {
+  id: string;
+  created: string;
+  images?: string[];
+  //Se der erro depois da categoria foi porque faltou adicionar aqui
+}
 
 export default function Dashboard() {
-  const [projects, setProjects] = useState(PROJECTS);
+  //Falta o fetch de projetos
+  const [projects, setProjects] = useState<fetchProject[]>([]);
   const [open, setOpen] = useState(false);
 
-  // Criação de um novo projeto
-  const handleCreate = (newProject: any) => {
-    setProjects((prev) => [
-      ...prev,
-      {
-        ...newProject,
-        id: crypto.randomUUID(),
-        created: new Date().toLocaleDateString('pt-BR'),
-      },
-    ]);
-    setOpen(false);
+  //Buscar projetos
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
+      setProjects(response.data as fetchProject[]);
+      // console.log(response.data);
+    } catch {
+      console.error('Erro ao buscar projetos');
+    }
   };
 
-  // Exclusão de projeto
-  // const deleteProject = (id: string) => {
-  //   setProjects((prev) => prev.filter((p) => p.id !== id));
-  // };
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  // Criação de um novo projeto
+  const handleCreate = async (newProject: Project) => {
+    // console.log(newProject);
+    try {
+      await axios.post(`${import.meta.env.VITE_API}/projects`, newProject, {
+        withCredentials: true,
+      });
+      fetchProjects();
+      setOpen(false);
+      toast.success('Projeto criado com sucesso');
+    } catch {
+      toast.error('Erro ao criar projeto');
+    }
+  };
 
   const deleteProject = (id: string) => {
     console.log(id);
@@ -41,6 +60,7 @@ export default function Dashboard() {
 
   return (
     <main className="flex-1 overflow-y-auto">
+      <Toaster />
       {/* Header */}
       <header className="flex items-center justify-between px-8 py-5 border-b border-border bg-background/60 backdrop-blur-md sticky top-0 z-10">
         <div>
@@ -67,12 +87,13 @@ export default function Dashboard() {
                 <h3 className="text-lg font-semibold mb-1">{p.title}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{p.fastDescription}</p>
 
+                {/* Estava dando erro pois não defini a propriedade pois não lembrava o nome */}
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {p.technologies.map((tech, index) => (
+                  {/* {p.technologies.map((tech, index) => (
                     <Badge key={index} variant="secondary">
                       {tech}
                     </Badge>
-                  ))}
+                  ))} */}
                 </div>
 
                 <p className="text-xs text-muted-foreground">Criado em: {p.created}</p>
