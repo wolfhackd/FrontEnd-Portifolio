@@ -65,7 +65,7 @@ export default function Technologies() {
 
   const deleteTechnology = async (technologyId: string) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API}/technologies-delete`,
         {
           id: technologyId,
@@ -74,7 +74,6 @@ export default function Technologies() {
           withCredentials: true,
         },
       );
-      console.log(response.data);
       // Atualiza a lista depois de excluir
       fetchTechnologies();
       toast.success('Tecnologia deletada com sucesso');

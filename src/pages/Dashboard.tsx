@@ -21,6 +21,7 @@ interface fetchProject extends Project {
 export default function Dashboard() {
   const [projects, setProjects] = useState<fetchProject[]>([]);
   const [open, setOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState<string | null>(null);
 
   //Buscar projetos
   const fetchProjects = async () => {
@@ -57,7 +58,17 @@ export default function Dashboard() {
   };
 
   //Depois terminar
-  const deleteProject = (id: string) => {
+  const deleteProject = async (id: string) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_API}/projects-delete`, {
+        id: id,
+      });
+      toast.success('Projeto deletado com sucesso');
+      setOpenDialog(null);
+      fetchProjects();
+    } catch {
+      toast.error('Erro ao deletar projeto');
+    }
     console.log(id);
   };
 
@@ -115,7 +126,10 @@ export default function Dashboard() {
                   Editar
                 </Button>
 
-                <Dialog>
+                <Dialog
+                  open={openDialog === p.id}
+                  onOpenChange={(v) => setOpenDialog(v ? p.id : null)}
+                >
                   <DialogTrigger asChild>
                     <Button variant="destructive" size="sm">
                       Excluir

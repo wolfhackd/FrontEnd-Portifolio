@@ -9,6 +9,17 @@ export function DashboardLayout() {
     navigate(link);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:3333/logout', {
+        method: 'GET',
+        credentials: 'include', // envia os cookies HTTP-only
+      });
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  };
   //Anotações importantes
   // Tenho que fazer o handle logout e tratar no back end tbm(eu acho)
 
@@ -44,6 +55,7 @@ export function DashboardLayout() {
           <Button
             variant="ghost"
             className="justify-start gap-2 text-destructive hover:text-destructive"
+            onClick={handleLogout}
           >
             <LogOut size={18} /> Sair
           </Button>

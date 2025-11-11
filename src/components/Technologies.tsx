@@ -18,7 +18,6 @@ export default function Technologies() {
       try {
         const response = await axios.get<Technology[]>(`${import.meta.env.VITE_API}/technologies`);
         setTECHNOLOGIES(response.data);
-        console.log(response.data);
       } catch {
         console.error('Não foi possível fazer o fetch das tecnologias');
       }
