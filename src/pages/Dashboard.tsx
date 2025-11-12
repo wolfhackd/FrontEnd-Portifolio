@@ -10,12 +10,15 @@ import {
 import { NewProjectModal, type Project } from '@/components/NewProjectModal';
 import axios from 'axios';
 import { toast, Toaster } from 'sonner';
+import { Badge } from '@/components/ui/badge';
 
 interface fetchProject extends Project {
   id: string;
   created: string;
   images?: string[];
-  //Se der erro depois da categoria foi porque faltou adicionar aqui
+  //Falta os dois relacionamentos o technologies e challenges
+  technologies?: string[];
+  challenges?: string[];
 }
 
 export default function Dashboard() {
@@ -107,13 +110,13 @@ export default function Dashboard() {
                 <h3 className="text-lg font-semibold mb-1">{p.title}</h3>
                 <p className="text-sm text-muted-foreground mb-3">{p.fastDescription}</p>
 
-                {/* Estava dando erro pois não defini a propriedade pois não lembrava o nome */}
+                {/* List of technologies of the project */}
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {/* {p.technologies.map((tech, index) => (
+                  {p.technologies?.map((tech, index) => (
                     <Badge key={index} variant="secondary">
                       {tech}
                     </Badge>
-                  ))} */}
+                  ))}
                 </div>
 
                 <p className="text-xs text-muted-foreground">
