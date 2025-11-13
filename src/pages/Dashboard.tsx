@@ -1,39 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogHeader } from '@/components/ui/dialog';
-import {
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { NewProjectModal, type Project } from '@/components/NewProjectModal';
-import axios from 'axios';
 import { toast, Toaster } from 'sonner';
 import { Badge } from '@/components/ui/badge';
-
-interface fetchProject extends Project {
-  id: string;
-  created: string;
-  images?: string[];
-  //Falta os dois relacionamentos o technologies e challenges
-  technologies?: string[];
-  challenges?: string[];
-}
+import DeleteProjectButton from '@/components/DeleteProjectButton';
+import { createProject, fetchProjects, type fetchProject } from '@/services/Projects';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<fetchProject[]>([]);
   const [open, setOpen] = useState(false);
-  const [openDialog, setOpenDialog] = useState<string | null>(null);
 
-  //Buscar projetos
-  const fetchProjects = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
-      setProjects(response.data as fetchProject[]);
-    } catch {
-      console.error('Erro ao buscar projetos');
-    }
+  const loadProjects = async () => {
+    const res = await fetchProjects();
+    if (res) setProjects(res);
   };
 
   const dateFormater = (date: string) => {
@@ -49,10 +28,8 @@ export default function Dashboard() {
 
   const handleCreate = async (newProject: Project) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API}/projects`, newProject, {
-        withCredentials: true,
-      });
-      fetchProjects();
+      await createProject(newProject);
+      loadProjects();
       setOpen(false);
       toast.success('Projeto criado com sucesso');
     } catch {
@@ -60,28 +37,13 @@ export default function Dashboard() {
     }
   };
 
-  //Depois terminar
-  const deleteProject = async (id: string) => {
-    try {
-      await axios.post(`${import.meta.env.VITE_API}/projects-delete`, {
-        id: id,
-      });
-      toast.success('Projeto deletado com sucesso');
-      setOpenDialog(null);
-      fetchProjects();
-    } catch {
-      toast.error('Erro ao deletar projeto');
-    }
-    console.log(id);
-  };
-
-  // -------------------Área de testes---------------------
+  // -------------------Área de testes---------------------(:3)
 
   //----------------------------------------------------------
 
-  //Inicializações
+  //Initialization of projects
   useEffect(() => {
-    fetchProjects();
+    loadProjects();
   }, []);
 
   return (
@@ -98,7 +60,7 @@ export default function Dashboard() {
         <NewProjectModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
       </header>
 
-      {/* Grid de projetos */}
+      {/* Grid of projects */}
       <section className="p-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {projects.map((p, i) => (
@@ -129,50 +91,13 @@ export default function Dashboard() {
                   Editar
                 </Button>
 
-                <Dialog
-                  open={openDialog === p.id}
-                  onOpenChange={(v) => setOpenDialog(v ? p.id : null)}
-                >
-                  <DialogTrigger asChild>
-                    <Button variant="destructive" size="sm">
-                      Excluir
-                    </Button>
-                  </DialogTrigger>
-
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Você realmente deseja excluir?</DialogTitle>
-                      <DialogDescription>
-                        Essa ação apagará a tecnologia <strong>{p.title}</strong> permanentemente.
-                      </DialogDescription>
-                    </DialogHeader>
-
-                    <div className="flex justify-end gap-2 mt-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-                        }}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        onClick={() => {
-                          deleteProject(p.id);
-                        }}
-                      >
-                        Excluir
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                <DeleteProjectButton project={p} fetchProjects={loadProjects} />
               </div>
             </div>
           ))}
         </div>
 
-        {/* Caso não tenha projetos */}
+        {/* Message when there are no projects */}
         {projects.length === 0 && (
           <div className="text-center py-20 text-muted-foreground">
             Nenhum projeto cadastrado ainda.
