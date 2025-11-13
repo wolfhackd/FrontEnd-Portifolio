@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 
 const Project = () => {
   //não estou usando ainda, porem funciona
+  //Só implementar depois do dashboard completo
   // const { id } = useParams();
 
   // Chamada de teste
@@ -47,7 +48,7 @@ const Project = () => {
             Ver Código ↗
           </Button>
         </div>
-        {/* data do projeto */}
+        {/* Date of post */}
         <p>Postado em: {project.created}</p>
 
         <img
@@ -55,14 +56,14 @@ const Project = () => {
           alt={`Imagem do projeto ${project.title}`}
           className="rounded-2xl"
         />
-        {/* Visão geral */}
+        {/* Overview */}
         <h2 className="text-4xl font-bold">🥽Visão Geral</h2>
         <div className="bg-[#EEF4ED] p-2 rounded-md flex">
           <blockquote className=" text-[#0B2545] text-lg italic border-l-4 border-blue-600 pl-4 bg-accent rounded-r-md">
             {project.overview}
           </blockquote>
         </div>
-        {/* techstack com desc */}
+        {/* techstack with icons */}
         <h2 className="text-4xl font-bold">🤖Tecnologias</h2>
         <ul className="bg-[#EEF4ED] p-2 rounded-md border-l-4 border-blue-600 pl-4">
           {project.technologies.map((tech) => {
@@ -76,7 +77,7 @@ const Project = () => {
             );
           })}
         </ul>
-        {/* Desafios e aprendizados */}
+        {/* challenges and learnings */}
         <h2 className="text-4xl font-bold">📚Desafios e Aprendizados</h2>
         <Accordion type="single" collapsible className="cursor-pointer">
           {project.challenges.map((challenge, i) => {

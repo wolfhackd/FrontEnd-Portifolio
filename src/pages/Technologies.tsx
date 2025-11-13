@@ -13,6 +13,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import {
+  createTechnology,
+  deleteTechnology,
+  fetchTechnologies,
+  type newTech,
+} from '@/services/Technologies';
 
 interface Technology {
   id: string;
@@ -24,38 +30,24 @@ interface Technology {
   };
 }
 
-type newTech = {
-  name: string;
-  icon: string;
-  color: string;
-};
-
 export default function Technologies() {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [open, setOpen] = useState(false);
 
   // 🔹 Buscar tecnologias ao carregar a página
-  const fetchTechnologies = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API}/technologies`, {
-        withCredentials: true,
-      });
-      setTechnologies(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar tecnologias:', error);
-    }
+  const loadTechnologies = async () => {
+    const res = await fetchTechnologies();
+    if (res) setTechnologies(res);
   };
 
   useEffect(() => {
-    fetchTechnologies();
+    loadTechnologies();
   }, []);
 
   const handleCreate = async (tech: newTech) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API}/technologies`, tech, {
-        withCredentials: true,
-      });
-      fetchTechnologies();
+      await createTechnology(tech);
+      loadTechnologies();
       setOpen(false);
       toast.success('Tecnologia criada com sucesso');
     } catch (error) {
@@ -63,19 +55,10 @@ export default function Technologies() {
     }
   };
 
-  const deleteTechnology = async (technologyId: string) => {
+  const excludeTechnology = async (technologyId: string) => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API}/technologies-delete`,
-        {
-          id: technologyId,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-      // Atualiza a lista depois de excluir
-      fetchTechnologies();
+      await deleteTechnology(technologyId);
+      loadTechnologies();
       toast.success('Tecnologia deletada com sucesso');
     } catch (error) {
       console.error('Erro ao deletar tecnologia:', error);
@@ -143,7 +126,7 @@ export default function Technologies() {
                         Cancelar
                       </Button>
 
-                      <Button variant="destructive" onClick={() => deleteTechnology(tech.id)}>
+                      <Button variant="destructive" onClick={() => excludeTechnology(tech.id)}>
                         Excluir
                       </Button>
                     </div>

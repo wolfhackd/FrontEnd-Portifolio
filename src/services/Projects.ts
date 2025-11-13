@@ -29,3 +29,15 @@ export const createProject = async (project: Project) => {
     console.error('Erro ao criar projeto');
   }
 };
+
+export const deleteProject = async (id: string) => {
+  try {
+    await axios.post(
+      `${import.meta.env.VITE_API}/projects-delete`,
+      { id },
+      { withCredentials: true },
+    );
+  } catch {
+    console.error('Erro ao deletar projeto');
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,8 @@ import {
   DialogTrigger,
 } from './ui/dialog';
 import { Button } from './ui/button';
-import axios from 'axios';
 import { toast } from 'sonner';
-import { fetchProjects } from '@/services/Projects';
+import { deleteProject } from '@/services/Projects';
 
 const DeleteProjectButton = ({
   project: p,
@@ -21,14 +20,11 @@ const DeleteProjectButton = ({
 }) => {
   const [openDialog, setOpenDialog] = useState<string | null>(null);
 
-  const deleteProject = async (id: string) => {
+  const excludeProject = async (id: string) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API}/projects-delete`, {
-        id: id,
-      });
+      deleteProject(id);
       toast.success('Projeto deletado com sucesso');
       setOpenDialog(null);
-      // Tenho que trazer o fetch
       fetchProjects();
     } catch {
       toast.error('Erro ao deletar projeto');
@@ -64,7 +60,7 @@ const DeleteProjectButton = ({
           <Button
             variant="destructive"
             onClick={() => {
-              deleteProject(p.id);
+              excludeProject(p.id);
             }}
           >
             Excluir

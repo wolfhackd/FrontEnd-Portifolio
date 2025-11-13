@@ -11,24 +11,6 @@ export default function AuthCallback() {
 
     if (!code) return;
 
-    // fetch(`${import.meta.env.API}/auth/github`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ code: code }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     //passar um token pro axios
-    //     if (data.user?.login === 'wolfhackd') {
-    //       localStorage.setItem('auth', 'true');
-
-    //       navigate('/dashboard');
-    //     } else {
-    //       alert('Acesso negado 😅');
-    //       navigate('/login');
-    //     }
-    //   });
-
     const response = async (code: any) => {
       try {
         const res = await axios.post(

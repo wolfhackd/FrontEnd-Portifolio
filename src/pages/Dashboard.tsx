@@ -5,6 +5,7 @@ import { toast, Toaster } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import DeleteProjectButton from '@/components/DeleteProjectButton';
 import { createProject, fetchProjects, type fetchProject } from '@/services/Projects';
+import { dateFormater } from '@/services/utils';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<fetchProject[]>([]);
@@ -13,17 +14,6 @@ export default function Dashboard() {
   const loadProjects = async () => {
     const res = await fetchProjects();
     if (res) setProjects(res);
-  };
-
-  const dateFormater = (date: string) => {
-    const createdDate = new Date(date);
-    const formatedDate = createdDate.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
-
-    return formatedDate;
   };
 
   const handleCreate = async (newProject: Project) => {
