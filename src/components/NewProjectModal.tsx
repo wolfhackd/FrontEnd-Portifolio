@@ -11,19 +11,20 @@ import { Label } from '@/components/ui/label';
 import { Plus } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import type { Project } from '@/types';
 
 // interface Technology {
 //   id: string;
 //   name: string;
 // }
 
-export interface Project {
-  title: string;
-  description: string;
-  fastDescription: string;
-  link: string;
-  overview: string;
-}
+// export interface Project {
+//   title: string;
+//   description: string;
+//   fastDescription: string;
+//   link: string;
+//   overview: string;
+// }
 
 export function NewProjectModal({
   open,

@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { NewProjectModal, type Project } from '@/components/NewProjectModal';
+import { NewProjectModal } from '@/components/NewProjectModal';
 import { toast, Toaster } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import DeleteProjectButton from '@/components/DeleteProjectButton';
-import { createProject, fetchProjects, type fetchProject } from '@/services/Projects';
+import { createProject, fetchProjects } from '@/services/Projects';
 import { dateFormater } from '@/services/utils';
+import { EditProjectButton } from '@/components/EditProjectButton';
+import { fetchTechnologies } from '@/services/Technologies';
+import type { Project, Technology } from '@/types';
 
 export default function Dashboard() {
-  const [projects, setProjects] = useState<fetchProject[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [open, setOpen] = useState(false);
+  const [technologies, setTechnologies] = useState<Technology[]>([]);
 
   const loadProjects = async () => {
     const res = await fetchProjects();
@@ -34,6 +37,7 @@ export default function Dashboard() {
   //Initialization of projects
   useEffect(() => {
     loadProjects();
+    fetchTechnologies().then(setTechnologies);
   }, []);
 
   return (
@@ -66,20 +70,22 @@ export default function Dashboard() {
                 <div className="flex flex-wrap gap-1 mb-3">
                   {p.technologies?.map((tech, index) => (
                     <Badge key={index} variant="secondary">
-                      {tech}
+                      {tech.name}
                     </Badge>
                   ))}
                 </div>
 
                 <p className="text-xs text-muted-foreground">
-                  Criado em: {dateFormater(p.created)}
+                  Criado em: {p.created ? dateFormater(p.created) : 'Sem data'}
                 </p>
               </div>
 
               <div className="flex justify-end gap-2 mt-4">
-                <Button variant="outline" size="sm">
-                  Editar
-                </Button>
+                <EditProjectButton
+                  project={p}
+                  fetchProjects={loadProjects}
+                  technologies={technologies}
+                />
 
                 <DeleteProjectButton project={p} fetchProjects={loadProjects} />
               </div>
