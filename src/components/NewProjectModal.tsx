@@ -13,19 +13,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import type { Project } from '@/types';
 
-// interface Technology {
-//   id: string;
-//   name: string;
-// }
-
-// export interface Project {
-//   title: string;
-//   description: string;
-//   fastDescription: string;
-//   link: string;
-//   overview: string;
-// }
-
 export function NewProjectModal({
   open,
   setOpen,
@@ -42,16 +29,6 @@ export function NewProjectModal({
     link: '',
     overview: '',
   });
-
-  // const [technologies, setTechnologies] = useState<Technology[]>([]);
-
-  // useEffect(() => {
-  //   const fetchTechnologies = async () => {
-  //     const res = await axios.get(`${import.meta.env.VITE_API}/technologies`);
-  //     setTechnologies(res.data);
-  //   };
-  //   fetchTechnologies();
-  // }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

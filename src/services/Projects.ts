@@ -1,14 +1,6 @@
 import type { Project } from '@/types';
 import axios from 'axios';
 
-// export interface fetchProject extends Project {
-//   id: string;
-//   created: string;
-//   images?: string[];
-//   technologies?: string[];
-//   challenges?: string[];
-// }
-
 export const fetchProjects = async () => {
   try {
     const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
