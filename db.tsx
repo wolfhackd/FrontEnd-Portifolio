@@ -93,20 +93,7 @@ export const PROJECTS: Project[] = [
     overview:
       'O projeto Let Me Ask foi desenvolvido para modernizar a interação em lives, eventos e conferências, tornando o processo de perguntas mais simples e democrático. A aplicação é totalmente responsiva, conta com autenticação via Google e integrações em tempo real via WebSocket.',
     images: ['/letmeasktwo.jpeg', '/letmeaskone.jpeg'],
-    technologies: [
-      'react',
-      'vite',
-      'typescript',
-      'tailwind',
-      'reactRouter',
-      'reactQuery',
-      'hooks',
-      'node',
-      'fastify',
-      'postgres',
-      'drizzle',
-      'zod',
-    ],
+    technologies: [],
     link: 'https://github.com/wolfhackd/let-me-ask',
     challenges: [
       {

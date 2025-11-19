@@ -9,6 +9,8 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 import { Command, CommandGroup, CommandItem } from './ui/command';
 import axios from 'axios';
 import type { Technology } from '@/types';
+import FileUploader from './FileUploader';
+import { TagInput } from './TagInput';
 
 // export interface Category {
 //   id: string;
@@ -24,34 +26,25 @@ export const EditProjectButton = ({
   fetchProjects: () => Promise<void>;
   technologies: Technology[];
 }) => {
-  // ----------------------
-  // Estados do projeto
-  // ----------------------
+  // Projects states
   const [title, setTitle] = useState(p.title);
   const [description, setDescription] = useState(p.description);
   const [link, setLink] = useState(p.link);
   const [fastDescription, setFastDesc] = useState(p.fastDescription);
   const [overview, setOverview] = useState(p.overview);
-
-  const [open, setOpen] = useState(false);
-
-  // Tecnologias selecionadas (vem do projeto)
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
     p.technologies?.map((t: any) => t.id) || [],
   );
-
-  // -----------------------
-  // MultiSelect agrupado por categoria
-  // -----------------------
   const technologiesByCategory = technologies.reduce((acc: Record<string, Technology[]>, tech) => {
     if (!acc[tech.category.name]) acc[tech.category.name] = [];
     acc[tech.category.name].push(tech);
     return acc;
   }, {});
+  const [images, setImages] = useState<string[]>([]);
 
-  // -----------------------
-  // Função de edição
-  // -----------------------
+  // Popover
+  const [open, setOpen] = useState(false);
+
   const editProject = async () => {
     try {
       const body = {
@@ -62,6 +55,7 @@ export const EditProjectButton = ({
         fastDescription,
         overview,
         technologies: selectedTechnologies, // IDs das techs
+        images,
       };
 
       const res = await axios.post(`${import.meta.env.VITE_API}/project-edit/${p.id}`, body, {
@@ -71,6 +65,7 @@ export const EditProjectButton = ({
       toast.success('Projeto modificado com sucesso!');
 
       console.log(res.data);
+      // console.log(body);
       await fetchProjects();
       setOpen(false);
     } catch (err) {
@@ -95,45 +90,48 @@ export const EditProjectButton = ({
           {/* Título */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Título</label>
-            <input className="input" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input
+              className="input border"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
-
           {/* Descrição */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Descrição</label>
             <textarea
-              className="textarea"
+              className="textarea border"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-
           {/* Link */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Link</label>
-            <input className="input" value={link} onChange={(e) => setLink(e.target.value)} />
+            <input
+              className="input border"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+            />
           </div>
-
           {/* Fast Description */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Descrição rápida</label>
             <textarea
-              className="textarea"
+              className="textarea border"
               value={fastDescription}
               onChange={(e) => setFastDesc(e.target.value)}
             />
           </div>
-
           {/* Overview */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Overview</label>
             <textarea
-              className="textarea"
+              className="textarea border"
               value={overview}
               onChange={(e) => setOverview(e.target.value)}
             />
           </div>
-
           {/* MULTISELECT DE TECNOLOGIAS */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Tecnologias</label>
@@ -185,6 +183,8 @@ export const EditProjectButton = ({
               </PopoverContent>
             </Popover>
           </div>
+          <TagInput value={images} onChange={setImages} />
+          {/* <FileUploader image=''/> */}
         </div>
 
         {/* AÇÕES */}
