@@ -1,9 +1,23 @@
-import { PROJECTS, TECHNOLOGIES } from '../../db';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import MenubarHome from '@/components/MenubarHome';
+import type { Project } from '@/types';
+import { fetchProjects } from '@/services/Projects';
+import { useEffect, useState } from 'react';
+import { ImageCloud } from '@/components/ImageCloud';
 
 const Works = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  const loadProjects = async () => {
+    const res = await fetchProjects();
+    if (res) setProjects(res);
+  };
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
   return (
     <>
       <MenubarHome />
@@ -24,7 +38,7 @@ const Works = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
-          {PROJECTS.map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={project.title + index}
               initial={{ opacity: 0, y: 40 }}
@@ -35,11 +49,19 @@ const Works = () => {
               className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"
             >
               <div className="relative w-full h-56 overflow-hidden">
-                <img
-                  src={project.images[0]}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                {project.images?.length ? (
+                  // <img
+                  //   src={project.images[0]}
+                  //   alt={project.title ?? 'Projeto'}
+                  //   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  // />
+                  <ImageCloud image={project.images[0]} />
+                ) : (
+                  // Placeholder se não houver imagem
+                  <div className="w-full h-full bg-gray-800 flex items-center justify-center text-gray-500">
+                    Sem imagem
+                  </div>
+                )}
               </div>
 
               <div className="p-6 flex flex-col gap-3">
@@ -49,14 +71,24 @@ const Works = () => {
                 </p>
 
                 <div className="flex flex-wrap gap-2 mt-3">
-                  {project.technologies.map((tech, i) => (
-                    <img
-                      key={i}
-                      src={`https://cdn.simpleicons.org/${TECHNOLOGIES[tech].icon}`}
-                      alt={tech}
-                      className="size-6"
-                    />
-                  ))}
+                  {(project.technologies ?? []).map((tech, i) => {
+                    const icon = tech?.icon;
+                    return icon ? (
+                      <img
+                        key={i}
+                        src={`https://cdn.simpleicons.org/${icon}`}
+                        alt={tech.name}
+                        className="size-6"
+                      />
+                    ) : (
+                      <span
+                        key={i}
+                        className="size-6 bg-gray-700 rounded flex items-center justify-center text-[10px] text-gray-300"
+                      >
+                        ?
+                      </span>
+                    );
+                  })}
                 </div>
 
                 {project.id && (

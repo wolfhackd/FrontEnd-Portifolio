@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 
 import { Button } from './ui/button';
@@ -9,13 +9,7 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 import { Command, CommandGroup, CommandItem } from './ui/command';
 import axios from 'axios';
 import type { Technology } from '@/types';
-import FileUploader from './FileUploader';
 import { TagInput } from './TagInput';
-
-// export interface Category {
-//   id: string;
-//   name: string;
-// }
 
 export const EditProjectButton = ({
   project: p,

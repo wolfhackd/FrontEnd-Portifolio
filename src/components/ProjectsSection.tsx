@@ -1,9 +1,30 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { PROJECTS } from '../../db';
+import { useEffect, useState } from 'react';
+import type { Project } from '@/types';
+import { fetchProjects } from '@/services/Projects';
+import { ImageCloud } from './ImageCloud';
 
 export function ProjectsSection() {
-  const recentProjects = PROJECTS.slice(-5).reverse();
+  //Tenho dous metodos de fazer isso
+  // Fazer um fetch completo e tirar apenas as ultimas que quero
+  //ou
+  // Fazer uma rota que pegue os últimos projetos e passar para o componente
+  // por enquanto usarei a primeira abordagem
+
+  // const recentProjects = PROJECTS.slice(-5).reverse();
+
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  const loadProjects = async () => {
+    const res = await fetchProjects();
+    if (res) setProjects(res);
+  };
+
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
   return (
     <motion.section
       className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-950 text-white py-32 px-6"
@@ -22,7 +43,7 @@ export function ProjectsSection() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-        {recentProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <motion.div
             key={project.id}
             initial={{ opacity: 0, y: 40 }}
@@ -32,11 +53,12 @@ export function ProjectsSection() {
             className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"
           >
             <div className="relative w-full h-56 overflow-hidden">
-              <img
+              {/* <img
                 src={project.images[0]}
                 alt={project.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+              /> */}
+              {project.images?.[0] && <ImageCloud image={project.images[0]} />}
             </div>
 
             <div className="p-6 flex flex-col gap-3">
@@ -46,9 +68,9 @@ export function ProjectsSection() {
               </p>
 
               <div className="flex flex-wrap gap-2 mt-3">
-                {project.technologies.slice(0, 4).map((tech, i) => (
+                {project.technologies?.slice(0, 4).map((tech, i) => (
                   <span key={i} className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-md">
-                    {tech}
+                    {tech.name}
                   </span>
                 ))}
               </div>
