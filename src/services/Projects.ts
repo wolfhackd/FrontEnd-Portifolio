@@ -9,6 +9,14 @@ export const fetchProjects = async () => {
     console.error('Erro ao buscar projetos');
   }
 };
+export const fetchProjectsById = async (id: string) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API}/projects/${id}`);
+    return response.data as Project;
+  } catch {
+    console.error('Erro ao buscar projeto');
+  }
+};
 
 export const createProject = async (project: Project) => {
   try {

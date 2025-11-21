@@ -52,7 +52,7 @@ export const EditProjectButton = ({
         images,
       };
 
-      const res = await axios.post(`${import.meta.env.VITE_API}/project-edit/${p.id}`, body, {
+      const res = await axios.post(`${import.meta.env.VITE_API}/projects-edit/${p.id}`, body, {
         withCredentials: true,
       });
 
