@@ -4,7 +4,7 @@ import { toast, Toaster } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import DeleteProjectButton from '@/components/DeleteProjectButton';
 import { createProject, fetchProjects } from '@/services/Projects';
-import { dateFormater } from '@/services/utils';
+import { dateFormater } from '@/utils/dateFromater';
 import { EditProjectButton } from '@/components/EditProjectButton';
 import { fetchTechnologies } from '@/services/Technologies';
 import type { Project, Technology } from '@/types';

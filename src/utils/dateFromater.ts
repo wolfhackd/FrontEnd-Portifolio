@@ -1,4 +1,5 @@
-export const dateFormater = (date: string) => {
+export const dateFormater = (date: string | null) => {
+  if (!date) return '';
   const createdDate = new Date(date);
   const formatedDate = createdDate.toLocaleDateString('pt-BR', {
     day: '2-digit',

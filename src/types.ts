@@ -20,4 +20,12 @@ export type Project = {
   technologies?: Technology[];
   images?: string[];
   created?: string;
+  challenges?: Challenge[];
+};
+
+export type Challenge = {
+  id?: string;
+  title: string;
+  text: string;
+  projectId?: string;
 };

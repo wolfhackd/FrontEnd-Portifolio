@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { type Project } from '@/types';
 import { fetchProjectsById } from '@/services/Projects';
-
-//falta implementar algumas funções, pois o banco ainda não foi construído
+import { ImageCloud } from '@/components/ImageCloud';
+import { dateFormater } from '@/utils/dateFromater';
 
 const Project = () => {
   const [project, setProject] = useState<Project>();
@@ -38,7 +38,7 @@ const Project = () => {
   return (
     <>
       <MenubarHome />
-      <div className="relative pt-30 flex flex-col justify-between p-[15%] text-[#EEF4ED] bg-[#134074] space-y-6 poppins-medium">
+      <div className="relative pt-30 flex flex-col justify-between p-[15%] text-[#EEF4ED] bg-[#31487a] space-y-6 poppins-medium">
         <div className="flex justify-between">
           <div>
             <h1 className="text-left font-bold text-5xl ">{project?.title}</h1>
@@ -59,14 +59,13 @@ const Project = () => {
           </Button>
         </div>
         {/* Date of post */}
-        <p>Postado em: {project?.created}</p>
+        <p>Postado em: {project?.created && dateFormater(project?.created)}</p>
 
-        <img
-          src={`${project?.images?.[0]}`}
-          alt={`Imagem do projeto ${project?.title}`}
-          className="rounded-2xl"
-        />
+        <div className="w-full h-full mx-auto rounded-2xl overflow-hidden bg-black/20">
+          <ImageCloud image={project?.images?.[0] ?? 'cld-sample'} />
+        </div>
         {/* Overview */}
+
         <h2 className="text-4xl font-bold">🥽Visão Geral</h2>
         <div className="bg-[#EEF4ED] p-2 rounded-md flex">
           <blockquote className=" text-[#0B2545] text-lg italic border-l-4 border-blue-600 pl-4 bg-accent rounded-r-md">
@@ -90,22 +89,26 @@ const Project = () => {
         {/* challenges and learnings */}
         <h2 className="text-4xl font-bold">📚Desafios e Aprendizados</h2>
         <Accordion type="single" collapsible className="cursor-pointer">
-          {/* {project?.challenges.map((challenge, i) => {
-            return (
-              <AccordionItem
-                value={`item-${i}`}
-                key={`${challenge.title}-${i}`}
-                className="mb-4 border rounded-md p-2 poppins-medium bg-[#EEF4ED] cursor-pointer"
-              >
-                <AccordionTrigger className="cursor-pointer border-l-4 border-blue-600 rounded-none pl-2 text-[#0B2545]">
-                  {challenge.title}
-                </AccordionTrigger>
-                <AccordionContent className="cursor-pointer border-l-4 border-blue-600 pl-2 text-[#0B2545]">
-                  {challenge.text}
-                </AccordionContent>
-              </AccordionItem>
-            );
-          })} */}
+          {!project?.challenges || project.challenges.length === 0 ? (
+            <p>Nenhum desafio registrado</p>
+          ) : (
+            project?.challenges.map((challenge, i) => {
+              return (
+                <AccordionItem
+                  value={`item-${i}`}
+                  key={`${challenge.title}-${i}`}
+                  className="mb-4 border rounded-md p-2 poppins-medium bg-[#EEF4ED] cursor-pointer"
+                >
+                  <AccordionTrigger className="cursor-pointer border-l-4 border-blue-600 rounded-none pl-2 text-[#0B2545]">
+                    {challenge.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="cursor-pointer border-l-4 border-blue-600 pl-2 text-[#0B2545]">
+                    {challenge.text}
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })
+          )}
         </Accordion>
       </div>
       {/* Footer */}
