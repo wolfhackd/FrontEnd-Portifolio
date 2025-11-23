@@ -8,15 +8,16 @@ import { ChevronDown } from 'lucide-react';
 import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 import { Command, CommandGroup, CommandItem } from './ui/command';
 import axios from 'axios';
-import type { Technology } from '@/types';
+import type { Challenge, Project, Technology } from '@/types';
 import { TagInput } from './TagInput';
+import { useMutation } from '@tanstack/react-query';
 
 export const EditProjectButton = ({
   project: p,
   fetchProjects,
   technologies,
 }: {
-  project: any;
+  project: Project;
   fetchProjects: () => Promise<void>;
   technologies: Technology[];
 }) => {
@@ -35,12 +36,13 @@ export const EditProjectButton = ({
     return acc;
   }, {});
   const [images, setImages] = useState<string[]>([]);
+  const [challenges, setChallenges] = useState<Challenge[]>(p.challenges || []);
 
   // Popover
   const [open, setOpen] = useState(false);
 
-  const editProject = async () => {
-    try {
+  const { mutate: editProject, isPending } = useMutation({
+    mutationFn: async () => {
       const body = {
         id: p.id,
         title,
@@ -48,24 +50,33 @@ export const EditProjectButton = ({
         link,
         fastDescription,
         overview,
-        technologies: selectedTechnologies, // IDs das techs
+        technologies: selectedTechnologies,
         images,
+        challenges,
       };
 
       const res = await axios.post(`${import.meta.env.VITE_API}/projects-edit/${p.id}`, body, {
         withCredentials: true,
       });
 
+      return res.data;
+    },
+    onSuccess: async () => {
       toast.success('Projeto modificado com sucesso!');
-
-      console.log(res.data);
-      // console.log(body);
       await fetchProjects();
       setOpen(false);
-    } catch (err) {
+    },
+    onError: () => {
       toast.error('Erro ao modificar projeto');
-    }
-  };
+    },
+  });
+
+  // useEffect(() => {
+  //   if (p.challenges) {
+  //     setChallenges(p.challenges);
+  //   }
+  //   console.log(p);
+  // }, [p.challenges]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -75,7 +86,7 @@ export const EditProjectButton = ({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-xl">
+      <DialogContent className="max-w-xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edição de projeto</DialogTitle>
         </DialogHeader>
@@ -177,8 +188,65 @@ export const EditProjectButton = ({
               </PopoverContent>
             </Popover>
           </div>
+
+          {/* IMAGENS */}
+          <label className="text-sm font-medium">Imagens</label>
           <TagInput value={images} onChange={setImages} />
-          {/* <FileUploader image=''/> */}
+
+          {/* CHALLENGES */}
+          <div className="flex flex-col gap-3">
+            <label className="text-sm font-medium">Desafios do projeto</label>
+
+            {challenges.length === 0 && (
+              <p className="text-sm text-muted-foreground">Nenhum desafio adicionado</p>
+            )}
+
+            {challenges.map((challenge, index) => (
+              <div key={challenge.id} className="border rounded-md p-3 flex flex-col gap-2">
+                <input
+                  className="input border"
+                  placeholder="Título do desafio"
+                  value={challenge.title}
+                  onChange={(e) => {
+                    const updated = [...challenges];
+                    updated[index].title = e.target.value;
+                    setChallenges(updated);
+                  }}
+                />
+
+                <textarea
+                  className="textarea border"
+                  placeholder="Descrição do desafio"
+                  value={challenge.text}
+                  onChange={(e) => {
+                    const updated = [...challenges];
+                    updated[index].text = e.target.value;
+                    setChallenges(updated);
+                  }}
+                />
+
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => {
+                    setChallenges(challenges.filter((_, i) => i !== index));
+                  }}
+                >
+                  Remover
+                </Button>
+              </div>
+            ))}
+
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setChallenges([...challenges, { title: '', text: '' }])}
+            >
+              + Adicionar desafio
+            </Button>
+          </div>
         </div>
 
         {/* AÇÕES */}
@@ -192,8 +260,8 @@ export const EditProjectButton = ({
             Cancelar
           </Button>
 
-          <Button variant="default" onClick={editProject}>
-            Salvar alterações
+          <Button variant="default" onClick={() => editProject()} disabled={isPending}>
+            {isPending ? 'Salvando...' : 'Salvar alterações'}
           </Button>
         </div>
       </DialogContent>

@@ -72,6 +72,7 @@ const Project = () => {
             {project?.overview}
           </blockquote>
         </div>
+
         {/* techstack with icons */}
         <h2 className="text-4xl font-bold">🤖Tecnologias</h2>
         <ul className="bg-[#EEF4ED] p-2 rounded-md border-l-4 border-blue-600 pl-4">
@@ -86,6 +87,7 @@ const Project = () => {
             );
           })}
         </ul>
+
         {/* challenges and learnings */}
         <h2 className="text-4xl font-bold">📚Desafios e Aprendizados</h2>
         <Accordion type="single" collapsible className="cursor-pointer">
@@ -111,6 +113,7 @@ const Project = () => {
           )}
         </Accordion>
       </div>
+
       {/* Footer */}
       <FooterSection />
     </>
