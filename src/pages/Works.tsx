@@ -18,8 +18,6 @@ const Works = () => {
     loadProjects();
   }, []);
 
-  //tem que fazer o fetch pelo id
-
   return (
     <>
       <MenubarHome />

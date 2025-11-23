@@ -94,49 +94,6 @@ export function NewProjectModal({
             />
           </div>
 
-          {/* Tecnologias */}
-          {/* <div className="flex flex-col gap-1.5">
-            <Label>Tecnologias</Label>
-            <Select
-              onValueChange={(value) =>
-                setNewProject((prev) => ({
-                  ...prev,
-                  technologies: prev.technologies.includes(value)
-                    ? prev.technologies.filter((t) => t !== value)
-                    : [...prev.technologies, value],
-                }))
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Selecione tecnologias" />
-              </SelectTrigger>
-              <SelectContent>
-                {technologies.map((tech) => (
-                  <SelectItem key={tech.id} value={tech.id}>
-                    {tech.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select> */}
-
-          {/* Mostrar selecionadas */}
-          {/* {newProject.technologies.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {newProject.technologies.map((id) => {
-                  const tech = technologies.find((t) => t.id === id);
-                  return (
-                    <span
-                      key={id}
-                      className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs"
-                    >
-                      {tech?.name}
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-          </div> */}
-
           <Button onClick={() => handleCreate(newProject)}>Salvar</Button>
         </div>
       </DialogContent>

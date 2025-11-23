@@ -9,7 +9,6 @@ export default function ContactMe() {
 
   return (
     <>
-      {/* BOTÃO PRINCIPAL */}
       <Button
         className="relative overflow-hidden bg-[#8DA9C4] border-2 border-[#8DA9C4] group cursor-pointer hover:bg-[#EEF4ED] text-[#0b2545]"
         size={'lg'}

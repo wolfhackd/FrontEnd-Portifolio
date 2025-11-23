@@ -10,12 +10,12 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import { type Project } from '@/types';
 import { fetchProjectsById } from '@/services/Projects';
 import { ImageCloud } from '@/components/ImageCloud';
 import { dateFormater } from '@/utils/dateFromater';
+import type { Project } from '@/types';
 
-const Project = () => {
+const ProjectPage = () => {
   const [project, setProject] = useState<Project>();
 
   const { id } = useParams<{ id: string }>();
@@ -120,4 +120,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default ProjectPage;

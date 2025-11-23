@@ -6,14 +6,6 @@ import { fetchProjects } from '@/services/Projects';
 import { ImageCloud } from './ImageCloud';
 
 export function ProjectsSection() {
-  //Tenho dous metodos de fazer isso
-  // Fazer um fetch completo e tirar apenas as ultimas que quero
-  //ou
-  // Fazer uma rota que pegue os últimos projetos e passar para o componente
-  // por enquanto usarei a primeira abordagem
-
-  // const recentProjects = PROJECTS.slice(-5).reverse();
-
   const [projects, setProjects] = useState<Project[]>([]);
 
   const loadProjects = async () => {

@@ -13,15 +13,13 @@ export function DashboardLayout() {
     try {
       await fetch('http://localhost:3333/logout', {
         method: 'GET',
-        credentials: 'include', // envia os cookies HTTP-only
+        credentials: 'include',
       });
       navigate('/');
     } catch (error) {
       console.error('Erro ao fazer logout:', error);
     }
   };
-  //Anotações importantes
-  // Tenho que fazer o handle logout e tratar no back end tbm(eu acho)
 
   return (
     <div className="flex h-screen bg-muted/10">

@@ -2,19 +2,19 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import './index.css';
 import Works from './pages/Works';
-import Project from './pages/Project';
 import { PrivateRoute } from './middleware/PrivateRoutes';
 import Dashboard from './pages/Dashboard';
 import AuthCallback from './pages/AuthCallback';
 import { DashboardLayout } from './components/DashboardLayout';
 import Technologies from './pages/Technologies';
+import ProjectPage from './pages/ProjectPage';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/projetos" element={<Works />} />
-      <Route path="/projeto/:id" element={<Project />} />
+      <Route path="/projeto/:id" element={<ProjectPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route
         element={

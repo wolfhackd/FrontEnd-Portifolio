@@ -30,10 +30,6 @@ export default function Dashboard() {
     }
   };
 
-  // -------------------Área de testes---------------------(:3)
-
-  //----------------------------------------------------------
-
   //Initialization of projects
   useEffect(() => {
     loadProjects();

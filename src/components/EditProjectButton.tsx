@@ -71,13 +71,6 @@ export const EditProjectButton = ({
     },
   });
 
-  // useEffect(() => {
-  //   if (p.challenges) {
-  //     setChallenges(p.challenges);
-  //   }
-  //   console.log(p);
-  // }, [p.challenges]);
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

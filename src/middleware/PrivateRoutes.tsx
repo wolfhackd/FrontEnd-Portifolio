@@ -8,7 +8,7 @@ export function PrivateRoute({ children }: { children: ReactElement }) {
   useEffect(() => {
     fetch('http://localhost:3333/me', {
       method: 'GET',
-      credentials: 'include', // envia os cookies HTTP-only
+      credentials: 'include',
     })
       .then(async (res) => {
         if (res.ok) {
@@ -26,9 +26,7 @@ export function PrivateRoute({ children }: { children: ReactElement }) {
 
   if (loading) return <div>Carregando...</div>;
 
-  // Se não estiver autenticado, redireciona para login
   if (!authenticated) return <Navigate to="/" replace />;
 
-  // Caso contrário, mostra o conteúdo protegido
   return children;
 }
