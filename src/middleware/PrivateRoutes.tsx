@@ -6,7 +6,7 @@ export function PrivateRoute({ children }: { children: ReactElement }) {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3333/me', {
+    fetch(`${import.meta.env.VITE_API}/me`, {
       method: 'GET',
       credentials: 'include',
     })
