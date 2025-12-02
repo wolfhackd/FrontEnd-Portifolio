@@ -6,25 +6,6 @@ export function PrivateRoute({ children }: { children: ReactElement }) {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   fetch(`${import.meta.env.VITE_API}/me`, {
-  //     method: 'GET',
-  //     credentials: 'include',
-  //   })
-  //     .then(async (res) => {
-  //       if (res.ok) {
-  //         setAuthenticated(true);
-  //       } else {
-  //         setAuthenticated(false);
-  //       }
-  //       setLoading(false);
-  //     })
-  //     .catch(() => {
-  //       setAuthenticated(false);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   useEffect(() => {
     async function checkAuth() {
       try {

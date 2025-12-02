@@ -8,6 +8,7 @@ import AuthCallback from './pages/AuthCallback';
 import { DashboardLayout } from './components/DashboardLayout';
 import Technologies from './pages/Technologies';
 import ProjectPage from './pages/ProjectPage';
+import InProgress from './pages/InProgress';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
       <Route path="/projetos" element={<Works />} />
       <Route path="/projeto/:id" element={<ProjectPage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/progress" element={<InProgress />} />
+
       <Route
         element={
           <PrivateRoute>
