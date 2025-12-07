@@ -11,7 +11,7 @@ export function DashboardLayout() {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:3333/logout', {
+      await fetch(`${import.meta.env.VITE_API}/logout`, {
         method: 'GET',
         credentials: 'include',
       });
