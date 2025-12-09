@@ -1,7 +1,6 @@
 import type { Project } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { use } from 'react';
 import { toast } from 'sonner';
 
 export function useFetchProjects() {
@@ -13,14 +12,25 @@ export function useFetchProjects() {
     },
   });
 }
-export const fetchProjectsById = async (id: string) => {
-  try {
-    const response = await axios.get(`${import.meta.env.VITE_API}/projects/${id}`);
-    return response.data as Project;
-  } catch {
-    console.error('Erro ao buscar projeto');
-  }
-};
+
+export function useFetchProjectsById(id: string) {
+  return useQuery<Project | null>({
+    queryKey: ['projects', id],
+    retry: false,
+    enabled: !!id,
+    queryFn: async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API}/projects/${id}`);
+        return res.data as Project;
+      } catch (err: any) {
+        if (err.response?.status === 404) {
+          return null;
+        }
+        throw err;
+      }
+    },
+  });
+}
 
 export function useCreateProject() {
   const queryClient = useQueryClient();

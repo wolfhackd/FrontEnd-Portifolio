@@ -9,31 +9,28 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
-import { fetchProjectsById } from '@/services/Projects';
 import { ImageCloud } from '@/components/ImageCloud';
 import { dateFormater } from '@/utils/dateFromater';
-import type { Project } from '@/types';
+
+import { useFetchProjectsById } from '@/services/Projects';
 
 const ProjectPage = () => {
-  const [project, setProject] = useState<Project>();
-
   const { id } = useParams<{ id: string }>();
 
-  const fetchProject = async (id: any) => {
-    console.log(id);
-    const res = await fetchProjectsById(id);
-    if (res) setProject(res);
-  };
+  if (!id) {
+    return <h1>Projeto não encontrado</h1>;
+  }
 
+  const { data: project, isLoading } = useFetchProjectsById(id);
+
+  if (isLoading) return <h1>Carregando...</h1>;
+
+  if (!project) {
+    return <h1>Projeto não encontrado</h1>;
+  }
   const handleClick = () => {
     window.open(project?.link, '_blank');
   };
-
-  useEffect(() => {
-    if (!id) return;
-    fetchProject(id);
-  }, [id]);
 
   return (
     <>
