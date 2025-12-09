@@ -29,7 +29,8 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
     acc[tech.category.name].push(tech);
     return acc;
   }, {});
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<string[]>(p.images || []);
+  // if (p.images) setImages(p.images);
   const [challenges, setChallenges] = useState<Challenge[]>(p.challenges || []);
 
   // Popover
@@ -89,6 +90,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
+
           {/* Descrição */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Descrição</label>
@@ -98,6 +100,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
+
           {/* Link */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Link</label>
@@ -107,6 +110,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               onChange={(e) => setLink(e.target.value)}
             />
           </div>
+
           {/* Fast Description */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Descrição rápida</label>
@@ -116,6 +120,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               onChange={(e) => setFastDesc(e.target.value)}
             />
           </div>
+
           {/* Overview */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Overview</label>
@@ -125,6 +130,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               onChange={(e) => setOverview(e.target.value)}
             />
           </div>
+
           {/* MULTISELECT DE TECNOLOGIAS */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Tecnologias</label>
