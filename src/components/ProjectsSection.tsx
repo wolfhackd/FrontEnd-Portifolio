@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import { ImageCloud } from './ImageCloud';
 import { useFetchProjects } from '@/services/Projects';

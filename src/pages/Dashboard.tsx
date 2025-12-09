@@ -5,8 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { createProject, useFetchProjects } from '@/services/Projects';
 import { dateFormater } from '@/utils/dateFromater';
 import type { Project } from '@/types';
-import { EditProjectButton } from '@/components/EditProjectButton';
-import { useFetchTechnologies } from '@/services/Technologies';
 
 export default function Dashboard() {
   // const [projects, setProjects] = useState<Project[]>([]);
