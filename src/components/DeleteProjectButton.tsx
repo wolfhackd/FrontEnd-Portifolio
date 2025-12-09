@@ -9,27 +9,19 @@ import {
 } from './ui/dialog';
 import { Button } from './ui/button';
 import { toast } from 'sonner';
-import { deleteProject } from '@/services/Projects';
+import { useDeleteProject } from '@/services/Projects';
 
-const DeleteProjectButton = ({
-  project: p,
-  fetchProjects,
-}: {
-  project: any;
-  fetchProjects: () => Promise<void>;
-}) => {
+const DeleteProjectButton = ({ project: p }: { project: any }) => {
   const [openDialog, setOpenDialog] = useState<string | null>(null);
+  const { mutate: deleteProject } = useDeleteProject();
 
   const excludeProject = async (id: string) => {
     try {
       deleteProject(id);
-      toast.success('Projeto deletado com sucesso');
       setOpenDialog(null);
-      fetchProjects();
     } catch {
       toast.error('Erro ao deletar projeto');
     }
-    console.log(id);
   };
 
   return (

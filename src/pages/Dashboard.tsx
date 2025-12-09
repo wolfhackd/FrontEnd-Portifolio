@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { NewProjectModal } from '@/components/NewProjectModal';
 import { toast, Toaster } from 'sonner';
 import { Badge } from '@/components/ui/badge';
-import { createProject, useFetchProjects } from '@/services/Projects';
+import { useCreateProject, useFetchProjects } from '@/services/Projects';
 import { dateFormater } from '@/utils/dateFromater';
 import type { Project } from '@/types';
 import { EditProjectButton } from '@/components/EditProjectButton';
+import DeleteProjectButton from '@/components/DeleteProjectButton';
 
 export default function Dashboard() {
   // const [projects, setProjects] = useState<Project[]>([]);
@@ -14,12 +15,12 @@ export default function Dashboard() {
 
   // const { data: technologies, isLoading: isLoadingTechnologies } = useFetchTechnologies();
   const { data: projects, isLoading: isLoadingProjects } = useFetchProjects();
+  const { mutate: createProject } = useCreateProject();
 
   const handleCreate = async (newProject: Project) => {
     try {
-      await createProject(newProject);
+      createProject(newProject);
       setOpen(false);
-      toast.success('Projeto criado com sucesso');
     } catch {
       toast.error('Erro ao criar projeto');
     }
@@ -69,7 +70,7 @@ export default function Dashboard() {
                 <div className="flex justify-end gap-2 mt-4">
                   <EditProjectButton project={p} />
 
-                  {/* <DeleteProjectButton project={p} fetchProjects={loadProjects} /> */}
+                  <DeleteProjectButton project={p} />
                 </div>
               </div>
             ))}
