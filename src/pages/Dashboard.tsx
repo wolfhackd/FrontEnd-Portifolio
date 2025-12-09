@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { createProject, useFetchProjects } from '@/services/Projects';
 import { dateFormater } from '@/utils/dateFromater';
 import type { Project } from '@/types';
+import { EditProjectButton } from '@/components/EditProjectButton';
 
 export default function Dashboard() {
   // const [projects, setProjects] = useState<Project[]>([]);
@@ -66,7 +67,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="flex justify-end gap-2 mt-4">
-                  {/* <EditProjectButton project={p} technologies={technologies} /> */}
+                  <EditProjectButton project={p} />
 
                   {/* <DeleteProjectButton project={p} fetchProjects={loadProjects} /> */}
                 </div>
