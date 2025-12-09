@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Trash2, Cpu } from 'lucide-react';
 import { NewTechnologyModal } from '@/components/NewTechnologieModal';
-import { toast, Toaster } from 'sonner';
+import { Toaster } from 'sonner';
 import {
   Dialog,
   DialogContent,
