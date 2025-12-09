@@ -4,9 +4,18 @@ import { Link } from 'react-router-dom';
 import { ImageCloud } from './ImageCloud';
 import { useFetchProjects } from '@/services/Projects';
 import type { Project } from '@/types';
+import { useEffect, useState } from 'react';
 
 export function ProjectsSection() {
   const { data: projects, isLoading } = useFetchProjects();
+  const [TopProjects, setTopProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    if (!isLoading && projects) {
+      const topSix = projects.slice(0, 6);
+      setTopProjects(topSix);
+    }
+  }, [projects]);
 
   return (
     <motion.section
@@ -27,8 +36,8 @@ export function ProjectsSection() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
         {/* olhar isso */}
-        {(isLoading && <p>Loading...</p>) ||
-          projects?.map((project: Project, index: any) => (
+        {(isLoading && <p className="w-full text-center">Carregando...</p>) ||
+          TopProjects?.map((project: Project, index: any) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 40 }}
@@ -38,11 +47,6 @@ export function ProjectsSection() {
               className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"
             >
               <div className="relative w-full h-56 overflow-hidden">
-                {/* <img
-                src={project.images[0]}
-                alt={project.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              /> */}
                 {project.images?.[0] && <ImageCloud image={project.images[0]} />}
               </div>
 

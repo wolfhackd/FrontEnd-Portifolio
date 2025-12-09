@@ -12,6 +12,7 @@ import { Plus } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import type { Project } from '@/types';
+import { initialState } from '@/pages/Dashboard';
 
 export function NewProjectModal({
   open,
@@ -22,13 +23,7 @@ export function NewProjectModal({
   setOpen: (open: boolean) => void;
   handleCreate: (project: any) => void;
 }) {
-  const [newProject, setNewProject] = useState<Project>({
-    title: '',
-    description: '',
-    fastDescription: '',
-    link: '',
-    overview: '',
-  });
+  const [newProject, setNewProject] = useState<Project>(initialState);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -94,7 +89,14 @@ export function NewProjectModal({
             />
           </div>
 
-          <Button onClick={() => handleCreate(newProject)}>Salvar</Button>
+          <Button
+            onClick={() => {
+              handleCreate(newProject);
+              setNewProject(initialState);
+            }}
+          >
+            Salvar
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -8,6 +8,14 @@ import type { Project } from '@/types';
 import { EditProjectButton } from '@/components/EditProjectButton';
 import DeleteProjectButton from '@/components/DeleteProjectButton';
 
+export const initialState: Project = {
+  title: '',
+  description: '',
+  fastDescription: '',
+  link: '',
+  overview: '',
+};
+
 export default function Dashboard() {
   // const [projects, setProjects] = useState<Project[]>([]);
   const [open, setOpen] = useState(false);
