@@ -20,7 +20,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
   const [link, setLink] = useState(p.link);
   const [fastDescription, setFastDesc] = useState(p.fastDescription);
   const [overview, setOverview] = useState(p.overview);
-  const { data: technologies } = useFetchTechnologies();
+  const { data: technologies = [] } = useFetchTechnologies();
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
     p.technologies?.map((t: any) => t.id) || [],
   );
