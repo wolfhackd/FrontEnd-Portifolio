@@ -10,27 +10,21 @@ import { Command, CommandGroup, CommandItem } from './ui/command';
 import axios from 'axios';
 import type { Challenge, Project, Technology } from '@/types';
 import { TagInput } from './TagInput';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useFetchTechnologies } from '@/services/Technologies';
 
-export const EditProjectButton = ({
-  project: p,
-  fetchProjects,
-  technologies,
-}: {
-  project: Project;
-  fetchProjects: () => Promise<void>;
-  technologies: Technology[];
-}) => {
+export const EditProjectButton = ({ project: p }: { project: Project }) => {
   // Projects states
   const [title, setTitle] = useState(p.title);
   const [description, setDescription] = useState(p.description);
   const [link, setLink] = useState(p.link);
   const [fastDescription, setFastDesc] = useState(p.fastDescription);
   const [overview, setOverview] = useState(p.overview);
+  const { data: technologies } = useFetchTechnologies();
   const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
     p.technologies?.map((t: any) => t.id) || [],
   );
-  const technologiesByCategory = technologies.reduce((acc: Record<string, Technology[]>, tech) => {
+  const technologiesByCategory = technologies!.reduce((acc: Record<string, Technology[]>, tech) => {
     if (!acc[tech.category.name]) acc[tech.category.name] = [];
     acc[tech.category.name].push(tech);
     return acc;
@@ -40,6 +34,7 @@ export const EditProjectButton = ({
 
   // Popover
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const { mutate: editProject, isPending } = useMutation({
     mutationFn: async () => {
@@ -63,7 +58,7 @@ export const EditProjectButton = ({
     },
     onSuccess: async () => {
       toast.success('Projeto modificado com sucesso!');
-      await fetchProjects();
+      queryClient.invalidateQueries(['projects']);
       setOpen(false);
     },
     onError: () => {

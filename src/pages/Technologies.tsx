@@ -13,42 +13,25 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import {
-  createTechnology,
-  deleteTechnology,
-  fetchTechnologies,
+  useCreateTechnology,
+  useDeleteTechnology,
+  useFetchTechnologies,
   type newTech,
 } from '@/services/Technologies';
 
-interface Technology {
-  id: string;
-  name: string;
-  categoryID: string;
-  category: {
-    id: string;
-    name: string;
-  };
-}
-
 export default function Technologies() {
-  const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [open, setOpen] = useState(false);
 
-  // 🔹 Buscar tecnologias ao carregar a página
-  const loadTechnologies = async () => {
-    const res = await fetchTechnologies();
-    if (res) setTechnologies(res);
-  };
+  const { data: technologies, isLoading: isTechLoading } = useFetchTechnologies();
+  const createTechnology = useCreateTechnology();
+  const deleteTechnology = useDeleteTechnology();
 
-  useEffect(() => {
-    loadTechnologies();
-  }, []);
-
+  //invalidar query quando terminar
   const handleCreate = async (tech: newTech) => {
     try {
-      await createTechnology(tech);
-      loadTechnologies();
+      createTechnology.mutate(tech);
       setOpen(false);
-      toast.success('Tecnologia criada com sucesso');
+      // toast.success('Tecnologia criada com sucesso');
     } catch (error) {
       console.error('Erro ao criar tecnologia:', error);
     }
@@ -56,9 +39,8 @@ export default function Technologies() {
 
   const excludeTechnology = async (technologyId: string) => {
     try {
-      await deleteTechnology(technologyId);
-      loadTechnologies();
-      toast.success('Tecnologia deletada com sucesso');
+      deleteTechnology.mutate(technologyId);
+      // toast.success('Tecnologia deletada com sucesso');
     } catch (error) {
       console.error('Erro ao deletar tecnologia:', error);
     }
@@ -82,11 +64,15 @@ export default function Technologies() {
 
       {/* Lista de tecnologias */}
       <section className="p-8">
-        {technologies.length === 0 ? (
+        {isTechLoading ? (
+          <div className="flex justify-center items-center h-96">
+            <Cpu className="animate-spin text-cyan-400" />
+          </div>
+        ) : technologies?.length === 0 ? (
           <p className="text-center text-muted-foreground py-20">Nenhuma tecnologia cadastrada.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {technologies.map((tech) => (
+            {technologies?.map((tech) => (
               <div
                 key={tech.id}
                 className="bg-card border border-border rounded-xl p-5 shadow-sm flex justify-between items-center hover:shadow-md transition"
