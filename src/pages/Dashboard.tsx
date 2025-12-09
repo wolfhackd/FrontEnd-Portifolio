@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [open, setOpen] = useState(false);
   // const [technologies, setTechnologies] = useState<Technology[]>([]);
 
-  const { data: technologies, isLoading: isLoadingTechnologies } = useFetchTechnologies();
+  // const { data: technologies, isLoading: isLoadingTechnologies } = useFetchTechnologies();
   const { data: projects, isLoading: isLoadingProjects } = useFetchProjects();
 
   const handleCreate = async (newProject: Project) => {
@@ -68,7 +68,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="flex justify-end gap-2 mt-4">
-                  <EditProjectButton project={p} technologies={technologies} />
+                  {/* <EditProjectButton project={p} technologies={technologies} /> */}
 
                   {/* <DeleteProjectButton project={p} fetchProjects={loadProjects} /> */}
                 </div>
