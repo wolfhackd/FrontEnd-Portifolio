@@ -17,11 +17,8 @@ export const initialState: Project = {
 };
 
 export default function Dashboard() {
-  // const [projects, setProjects] = useState<Project[]>([]);
   const [open, setOpen] = useState(false);
-  // const [technologies, setTechnologies] = useState<Technology[]>([]);
 
-  // const { data: technologies, isLoading: isLoadingTechnologies } = useFetchTechnologies();
   const { data: projects, isLoading: isLoadingProjects } = useFetchProjects();
   const { mutate: createProject } = useCreateProject();
 
