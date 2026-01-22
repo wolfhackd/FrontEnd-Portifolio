@@ -1,18 +1,18 @@
-import MenubarHome from '@/components/MenubarHome';
-import { useParams } from 'react-router';
-import { Badge } from '@/components/ui/badge';
-import FooterSection from '@/components/FooterSection';
+import MenubarHome from "@/components/MenubarHome";
+import { useParams } from "react-router";
+import { Badge } from "@/components/ui/badge";
+import FooterSection from "@/components/FooterSection";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
-import { ImageCloud } from '@/components/ImageCloud';
-import { dateFormater } from '@/utils/dateFromater';
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { ImageCloud } from "@/components/ImageCloud";
+import { dateFormater } from "@/utils/dateFormater";
 
-import { useFetchProjectsById } from '@/services/Projects';
+import { useFetchProjectsById } from "@/services/Projects";
 
 const ProjectPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +29,7 @@ const ProjectPage = () => {
     return <h1>Projeto não encontrado</h1>;
   }
   const handleClick = () => {
-    window.open(project?.link, '_blank');
+    window.open(project?.link, "_blank");
   };
 
   return (
@@ -51,7 +51,10 @@ const ProjectPage = () => {
               })}
             </div>
           </div>
-          <Button className="cursor-pointer poppins-medium justify-end" onClick={handleClick}>
+          <Button
+            className="cursor-pointer poppins-medium justify-end"
+            onClick={handleClick}
+          >
             Ver Código ↗
           </Button>
         </div>
@@ -59,7 +62,7 @@ const ProjectPage = () => {
         <p>Postado em: {project?.created && dateFormater(project?.created)}</p>
 
         <div className="w-full h-full mx-auto rounded-2xl overflow-hidden bg-black/20">
-          <ImageCloud image={project?.images?.[0] ?? 'cld-sample'} />
+          <ImageCloud image={project?.images?.[0] ?? "cld-sample"} />
         </div>
         {/* Overview */}
 

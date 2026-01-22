@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { NewProjectModal } from '@/components/NewProjectModal';
-import { toast, Toaster } from 'sonner';
-import { Badge } from '@/components/ui/badge';
-import { useCreateProject, useFetchProjects } from '@/services/Projects';
-import { dateFormater } from '@/utils/dateFromater';
-import type { Project } from '@/types';
-import { EditProjectButton } from '@/components/EditProjectButton';
-import DeleteProjectButton from '@/components/DeleteProjectButton';
+import { useState } from "react";
+import { NewProjectModal } from "@/components/NewProjectModal";
+import { toast, Toaster } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { useCreateProject, useFetchProjects } from "@/services/Projects";
+import { dateFormater } from "@/utils/dateFormater";
+import type { Project } from "@/types";
+import { EditProjectButton } from "@/components/EditProjectButton";
+import DeleteProjectButton from "@/components/DeleteProjectButton";
 
 export const initialState: Project = {
-  title: '',
-  description: '',
-  fastDescription: '',
-  link: '',
-  overview: '',
+  title: "",
+  description: "",
+  fastDescription: "",
+  link: "",
+  overview: "",
 };
 
 export default function Dashboard() {
@@ -27,7 +27,7 @@ export default function Dashboard() {
       createProject(newProject);
       setOpen(false);
     } catch {
-      toast.error('Erro ao criar projeto');
+      toast.error("Erro ao criar projeto");
     }
   };
 
@@ -42,7 +42,11 @@ export default function Dashboard() {
             Gerencie e publique seus projetos pessoais
           </p>
         </div>
-        <NewProjectModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
+        <NewProjectModal
+          open={open}
+          setOpen={setOpen}
+          handleCreate={handleCreate}
+        />
       </header>
 
       {/* Grid of projects */}
@@ -56,7 +60,9 @@ export default function Dashboard() {
               >
                 <div>
                   <h3 className="text-lg font-semibold mb-1">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{p.fastDescription}</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {p.fastDescription}
+                  </p>
 
                   {/* List of technologies of the project */}
                   <div className="flex flex-wrap gap-1 mb-3">
@@ -68,7 +74,8 @@ export default function Dashboard() {
                   </div>
 
                   <p className="text-xs text-muted-foreground">
-                    Criado em: {p.created ? dateFormater(p.created) : 'Sem data'}
+                    Criado em:{" "}
+                    {p.created ? dateFormater(p.created) : "Sem data"}
                   </p>
                 </div>
 

@@ -1,11 +1,11 @@
-import type { Project } from '@/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
-import { toast } from 'sonner';
+import type { Project } from "@/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "sonner";
 
 export function useFetchProjects() {
   return useQuery<Project[]>({
-    queryKey: ['projects'],
+    queryKey: ["projects"],
     queryFn: async () => {
       const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
       return response.data;
@@ -15,12 +15,14 @@ export function useFetchProjects() {
 
 export function useFetchProjectsById(id: string) {
   return useQuery<Project | null>({
-    queryKey: ['projects', id],
+    queryKey: ["projects", id],
     retry: false,
     enabled: !!id,
     queryFn: async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API}/projects/${id}`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API}/project/${id}`,
+        );
         return res.data as Project;
       } catch (err: any) {
         if (err.response?.status === 404) {
@@ -36,15 +38,19 @@ export function useCreateProject() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (project: Project) => {
-      const response = await axios.post(`${import.meta.env.VITE_API}/projects`, project, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API}/project`,
+        project,
+        {
+          withCredentials: true,
+        },
+      );
       return response.data as Project;
     },
     onSuccess: () => {
-      toast.success('Projeto criado com sucesso');
+      toast.success("Projeto criado com sucesso");
       //testar
-      queryClient.invalidateQueries(['projects']);
+      queryClient.invalidateQueries(["projects"]);
     },
   });
 }
@@ -60,9 +66,9 @@ export function useDeleteProject() {
       );
     },
     onSuccess: () => {
-      toast.success('Projeto deletado com sucesso');
+      toast.success("Projeto deletado com sucesso");
       //testar
-      queryClient.invalidateQueries(['projects']);
+      queryClient.invalidateQueries(["projects"]);
     },
   });
 }
