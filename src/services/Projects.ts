@@ -7,7 +7,7 @@ export function useFetchProjects() {
   return useQuery<Project[]>({
     queryKey: ["projects"],
     queryFn: async () => {
-      const response = await axios.get(`${import.meta.env.VITE_API}/projects`);
+      const response = await axios.get(`${import.meta.env.VITE_API}/project`);
       return response.data;
     },
   });
