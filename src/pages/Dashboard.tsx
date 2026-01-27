@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NewProjectModal } from "@/components/NewProjectModal";
 import { toast, Toaster } from "sonner";
 import { Badge } from "@/components/ui/badge";

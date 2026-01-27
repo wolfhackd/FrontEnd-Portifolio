@@ -49,8 +49,7 @@ export function useCreateProject() {
     },
     onSuccess: () => {
       toast.success("Projeto criado com sucesso");
-      //testar
-      queryClient.invalidateQueries(["projects"]);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
   });
 }
@@ -65,7 +64,30 @@ export function useDeleteProject() {
     },
     onSuccess: () => {
       toast.success("Projeto deletado com sucesso");
-      queryClient.invalidateQueries(["projects"]);
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+  });
+}
+
+export function useUpdateProject() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (project: Project) => {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API}/project/${project.id}`,
+        project,
+        {
+          withCredentials: true,
+        },
+      );
+      return response.data as Project;
+    },
+    onSuccess: () => {
+      toast.success("Projeto modificado com sucesso");
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    },
+    onError: () => {
+      toast.error("Erro ao modificar projeto");
     },
   });
 }
