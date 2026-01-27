@@ -49,7 +49,8 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
   const handleToggleTechnology = (tech: Technology) => {
     const currentTechs = formData.technologies || [];
     // Verifica se a tecnologia já existe no array (comparando IDs)
-    const isSelected = currentTechs.some((t) => t.id === tech.id);
+    const isSelected =
+      formData.technologies?.some((t) => t.id === tech.id) ?? false;
 
     const newTechs = isSelected
       ? currentTechs.filter((t) => t.id !== tech.id) // Remove
@@ -110,8 +111,8 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="justify-between w-full">
-                  {formData.technologies?.length > 0
-                    ? `${formData.technologies.length} selecionadas`
+                  {(formData.technologies ?? []).length > 0
+                    ? `${formData.technologies?.length} selecionadas`
                     : "Selecione tecnologias"}
                   <ChevronDown size={16} />
                 </Button>
