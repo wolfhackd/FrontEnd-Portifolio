@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-import { ImageCloud } from './ImageCloud';
-import { useFetchProjects } from '@/services/Projects';
-import type { Project } from '@/types';
-import { useEffect, useState } from 'react';
+import { ImageCloud } from "./ImageCloud";
+import { useFetchProjects } from "@/services/Projects";
+import type { Project } from "@/types/types";
+import { useEffect, useState } from "react";
 
 export function ProjectsSection() {
   const { data: projects, isLoading } = useFetchProjects();
@@ -22,7 +22,7 @@ export function ProjectsSection() {
       className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-gray-950 text-white py-32 px-6"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
     >
       <div className="text-center mb-16">
@@ -30,7 +30,8 @@ export function ProjectsSection() {
           Últimos <span className="text-cyan-400">Projetos</span>
         </h1>
         <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-          Confira meus trabalhos mais recentes — focados em inovação, performance e design moderno.
+          Confira meus trabalhos mais recentes — focados em inovação,
+          performance e design moderno.
         </p>
       </div>
 
@@ -47,7 +48,9 @@ export function ProjectsSection() {
               className="bg-gray-900 rounded-2xl border border-gray-800 shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 overflow-hidden group"
             >
               <div className="relative w-full h-56 overflow-hidden">
-                {project.images?.[0] && <ImageCloud image={project.images[0]} />}
+                {project.images?.[0] && (
+                  <ImageCloud image={project.images[0]} />
+                )}
               </div>
 
               <div className="p-6 flex flex-col gap-3">

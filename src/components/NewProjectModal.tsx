@@ -4,15 +4,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Plus } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
-import type { Project } from '@/types';
-import { initialState } from '@/pages/Dashboard';
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Plus } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import type { Project } from "@/types/types";
+import { initialState } from "@/pages/Dashboard";
 
 export function NewProjectModal({
   open,
@@ -45,7 +45,9 @@ export function NewProjectModal({
             <Input
               placeholder="Ex: Portfólio, API de Clima, Dashboard..."
               value={newProject.title}
-              onChange={(e) => setNewProject({ ...newProject, title: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, title: e.target.value })
+              }
             />
           </div>
 
@@ -55,7 +57,12 @@ export function NewProjectModal({
             <Textarea
               placeholder="Descreva um resumo do projeto..."
               value={newProject.fastDescription}
-              onChange={(e) => setNewProject({ ...newProject, fastDescription: e.target.value })}
+              onChange={(e) =>
+                setNewProject({
+                  ...newProject,
+                  fastDescription: e.target.value,
+                })
+              }
             />
           </div>
 
@@ -65,7 +72,9 @@ export function NewProjectModal({
             <Textarea
               placeholder="Descreva brevemente o projeto..."
               value={newProject.description}
-              onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, description: e.target.value })
+              }
             />
           </div>
 
@@ -75,7 +84,9 @@ export function NewProjectModal({
             <Textarea
               placeholder="Descreva brevemente o projeto..."
               value={newProject.overview}
-              onChange={(e) => setNewProject({ ...newProject, overview: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, overview: e.target.value })
+              }
             />
           </div>
 
@@ -85,7 +96,9 @@ export function NewProjectModal({
             <Input
               placeholder="https://github.com/usuario/projeto"
               value={newProject.link}
-              onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, link: e.target.value })
+              }
             />
           </div>
 

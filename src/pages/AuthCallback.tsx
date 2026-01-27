@@ -1,39 +1,52 @@
-import axios from 'axios';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthCallback() {
   const navigate = useNavigate();
+  const initialized = useRef(false);
 
   useEffect(() => {
+    if (initialized.current) return;
+
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    const code = urlParams.get("code");
 
-    if (!code) return;
+    if (!code) {
+      navigate("/");
+      return;
+    }
 
-    const response = async (code: any) => {
+    const authenticate = async () => {
+      initialized.current = true;
       try {
         const res = await axios.post(
           `${import.meta.env.VITE_API}/auth/github`,
-          { code: code },
-          { withCredentials: true },
+          { code },
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          },
         );
 
-        if (res.data.message === 'Authenticated') {
-          navigate('/dashboard');
+        // console.log(res.data);
+
+        if (res.data.message === "Authentication Successful") {
+          navigate("/dashboard");
         }
       } catch (error) {
-        console.error(error);
-        navigate('/');
+        console.error("Erro na autenticação:", error);
+        navigate("/login?error=unauthorized");
       }
     };
 
-    response(code);
+    authenticate();
   }, [navigate]);
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <p>Autenticando com GitHub...</p>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+      <p className="text-gray-600 font-medium">Validando credenciais...</p>
     </div>
   );
 }

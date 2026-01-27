@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NewProjectModal } from "@/components/NewProjectModal";
 import { toast, Toaster } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { useCreateProject, useFetchProjects } from "@/services/Projects";
 import { dateFormater } from "@/utils/dateFormater";
-import type { Project } from "@/types";
-import { EditProjectButton } from "@/components/EditProjectButton";
+import type { Project } from "@/types/types";
 import DeleteProjectButton from "@/components/DeleteProjectButton";
+import { EditProjectButton } from "@/components/EditProjectButton";
 
 export const initialState: Project = {
   title: "",

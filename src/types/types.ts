@@ -2,9 +2,9 @@ export type Technology = {
   id: string;
   name: string;
   color: string;
-  categoryID: string;
+  categoryId: string;
   icon: string;
-  category: {
+  category?: {
     id: string;
     name: string;
   };

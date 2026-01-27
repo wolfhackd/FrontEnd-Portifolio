@@ -1,4 +1,4 @@
-import type { Project } from "@/types";
+import type { Project } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -59,15 +59,12 @@ export function useDeleteProject() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      await axios.post(
-        `${import.meta.env.VITE_API}/projects-delete`,
-        { id },
-        { withCredentials: true },
-      );
+      await axios.delete(`${import.meta.env.VITE_API}/project-delete/${id}`, {
+        withCredentials: true,
+      });
     },
     onSuccess: () => {
       toast.success("Projeto deletado com sucesso");
-      //testar
       queryClient.invalidateQueries(["projects"]);
     },
   });
