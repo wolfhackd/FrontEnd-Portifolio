@@ -18,16 +18,16 @@ import {
   type newTech,
 } from "@/services/Technologies";
 import { useFetchCategoriesWithTech } from "@/services/Category";
+import type { CategoryWithTech, Technology } from "@/types/types";
 
 export default function Technologies() {
   const [open, setOpen] = useState(false);
 
-  const { data: technologies, isLoading: isTechLoading } =
-    useFetchCategoriesWithTech();
+  const { data: categories, isLoading } = useFetchCategoriesWithTech();
+
   const createTechnology = useCreateTechnology();
   const deleteTechnology = useDeleteTechnology();
 
-  //invalidar query quando terminar
   const handleCreate = async (tech: newTech) => {
     try {
       createTechnology.mutate(tech);
@@ -65,72 +65,95 @@ export default function Technologies() {
         />
       </header>
 
-      {/* Lista de tecnologias */}
-      <section className="p-8">
-        {isTechLoading ? (
+      {/* Lista */}
+      <section className="p-8 space-y-10">
+        {isLoading ? (
           <div className="flex justify-center items-center h-96">
             <Cpu className="animate-spin text-cyan-400" />
           </div>
-        ) : technologies?.length === 0 ? (
+        ) : categories?.length === 0 ? (
           <p className="text-center text-muted-foreground py-20">
             Nenhuma tecnologia cadastrada.
           </p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {technologies?.map((tech: any) => (
-              <div
-                key={tech.id}
-                className="bg-card border border-border rounded-xl p-5 shadow-sm flex justify-between items-center hover:shadow-md transition"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <Cpu size={16} className="text-primary" />
-                    <h3 className="font-semibold">{tech.name}</h3>
-                  </div>
-                  <Badge variant="secondary" className="mt-2">
-                    {tech.category.name}
-                  </Badge>
-                </div>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button size="icon" variant="ghost">
-                      <Trash2 size={18} className="text-destructive" />
-                    </Button>
-                  </DialogTrigger>
+          categories?.map((category: CategoryWithTech) => (
+            <div key={category.id} className="space-y-4">
+              {/* Nome da Categoria */}
+              <h2 className="text-xl font-bold text-primary border-b pb-2">
+                {category.name}
+              </h2>
 
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Você realmente deseja excluir?</DialogTitle>
-                      <DialogDescription>
-                        Essa ação apagará a tecnologia{" "}
-                        <strong>{tech.name}</strong> permanentemente.
-                      </DialogDescription>
-                    </DialogHeader>
+              {/* Grid de Tecnologias */}
+              {category.technologies.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  Nenhuma tecnologia nessa categoria.
+                </p>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {category.technologies.map((tech: Technology) => (
+                    <div
+                      key={tech.id}
+                      className="bg-card border border-border rounded-xl p-5 shadow-sm flex justify-between items-center hover:shadow-md transition"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <Cpu size={16} className="text-primary" />
+                          <h3 className="font-semibold">{tech.name}</h3>
+                        </div>
 
-                    <div className="flex justify-end gap-2 mt-4">
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          document.dispatchEvent(
-                            new KeyboardEvent("keydown", { key: "Escape" }),
-                          );
-                        }}
-                      >
-                        Cancelar
-                      </Button>
+                        <Badge variant="secondary" className="mt-2">
+                          {category.name}
+                        </Badge>
+                      </div>
 
-                      <Button
-                        variant="destructive"
-                        onClick={() => excludeTechnology(tech.id)}
-                      >
-                        Excluir
-                      </Button>
+                      {/* Delete */}
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button size="icon" variant="ghost">
+                            <Trash2 size={18} className="text-destructive" />
+                          </Button>
+                        </DialogTrigger>
+
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>
+                              Você realmente deseja excluir?
+                            </DialogTitle>
+                            <DialogDescription>
+                              Essa ação apagará a tecnologia{" "}
+                              <strong>{tech.name}</strong> permanentemente.
+                            </DialogDescription>
+                          </DialogHeader>
+
+                          <div className="flex justify-end gap-2 mt-4">
+                            <Button
+                              variant="outline"
+                              onClick={() =>
+                                document.dispatchEvent(
+                                  new KeyboardEvent("keydown", {
+                                    key: "Escape",
+                                  }),
+                                )
+                              }
+                            >
+                              Cancelar
+                            </Button>
+
+                            <Button
+                              variant="destructive"
+                              onClick={() => excludeTechnology(tech.id)}
+                            >
+                              Excluir
+                            </Button>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            ))}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))
         )}
       </section>
     </main>

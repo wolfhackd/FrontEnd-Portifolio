@@ -1,9 +1,10 @@
 export type Technology = {
-  id?: string;
+  id: string;
   name: string;
   category: string;
   color: string;
   icon: string;
+  categoryId: string;
 };
 
 export type Challenge = {
@@ -38,4 +39,18 @@ export type ProjectUpdate = {
 
   technologyIds?: string[];
   challengeIds?: string[];
+};
+
+// type Technology = {
+//   id: string;
+//   name: string;
+//   color: string;
+//   icon: string;
+//   categoryId: string;
+// };
+
+export type CategoryWithTech = {
+  id: string;
+  name: string;
+  technologies: Technology[];
 };
