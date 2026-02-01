@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,34 +10,41 @@ import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { ChevronDown } from "lucide-react";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
-import { Command, CommandGroup, CommandItem, CommandList } from "./ui/command"; // Adicionado CommandList
-import type { Project, Technology } from "@/types/types";
-import { useFetchTechnologies } from "@/services/Technologies";
+import { Command, CommandGroup, CommandItem, CommandList } from "./ui/command";
 import { useUpdateProject } from "@/services/Projects";
+import { useFetchCategoriesWithTech } from "@/services/Category";
+import type { Project, ProjectUpdate } from "@/types/types";
 
-export const EditProjectButton = ({ project: p }: { project: Project }) => {
+type FormState = Omit<ProjectUpdate, "technologyIds"> & {
+  technologyIds: string[];
+};
+
+type ExistingProject = Project & { id: string };
+
+export const EditProjectButton = ({
+  project: p,
+}: {
+  project: ExistingProject;
+}) => {
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState<Project>(p);
+  const [formData, setFormData] = useState<FormState>({
+    ...p,
+    technologyIds: [],
+  });
 
-  const { data: allTechnologies } = useFetchTechnologies();
+  const { data: categories } = useFetchCategoriesWithTech();
   const { mutate: editProject, isPending } = useUpdateProject();
 
-  // Agrupa tecnologias por categoria (memoizado para não refazer o cálculo a cada render)
-  const technologiesByCategory = useMemo(() => {
-    return (
-      allTechnologies?.reduce(
-        (acc: Record<string, Technology[]>, tech: Technology) => {
-          const categoryName = tech.category?.name || "Outros";
-          if (!acc[categoryName]) acc[categoryName] = [];
-          acc[categoryName].push(tech);
-          return acc;
-        },
-        {},
-      ) || {}
-    );
-  }, [allTechnologies]);
+  // 🔥 Quando abrir, converte objetos → ids
+  useEffect(() => {
+    if (open) {
+      setFormData({
+        ...p,
+        technologyIds: (p as any).technologies?.map((t: any) => t.id) ?? [],
+      });
+    }
+  }, [open, p]);
 
-  // Handler para inputs de texto
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -45,18 +52,23 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handler específico para o array de tecnologias
-  const handleToggleTechnology = (tech: Technology) => {
-    const currentTechs = formData.technologies || [];
-    // Verifica se a tecnologia já existe no array (comparando IDs)
-    const isSelected =
-      formData.technologies?.some((t) => t.id === tech.id) ?? false;
+  const handleToggleTechnology = (techId: string) => {
+    setFormData((prev) => {
+      const isSelected = prev.technologyIds.includes(techId);
 
-    const newTechs = isSelected
-      ? currentTechs.filter((t) => t.id !== tech.id) // Remove
-      : [...currentTechs, tech]; // Adiciona objeto completo
+      return {
+        ...prev,
+        technologyIds: isSelected
+          ? prev.technologyIds.filter((id) => id !== techId)
+          : [...prev.technologyIds, techId],
+      };
+    });
+  };
 
-    setFormData((prev) => ({ ...prev, technologies: newTechs }));
+  const handleSubmit = () => {
+    editProject(formData, {
+      onSuccess: () => setOpen(false),
+    });
   };
 
   return (
@@ -73,7 +85,6 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
         </DialogHeader>
 
         <div className="flex flex-col gap-4 mt-3">
-          {/* Inputs de Texto - Reutilizando handleChange */}
           {[
             { label: "Título", name: "title", type: "input" },
             { label: "Descrição", name: "description", type: "textarea" },
@@ -89,14 +100,14 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
               <label className="text-sm font-medium">{field.label}</label>
               {field.type === "input" ? (
                 <input
-                  className="input border p-2 rounded-md"
+                  className="border p-2 rounded-md"
                   name={field.name}
                   value={(formData as any)[field.name] || ""}
                   onChange={handleChange}
                 />
               ) : (
                 <textarea
-                  className="textarea border p-2 rounded-md"
+                  className="border p-2 rounded-md"
                   name={field.name}
                   value={(formData as any)[field.name] || ""}
                   onChange={handleChange}
@@ -105,31 +116,33 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
             </div>
           ))}
 
-          {/* MULTISELECT DE TECNOLOGIAS */}
+          {/* 💎 TECNOLOGIAS */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Tecnologias</label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="justify-between w-full">
-                  {(formData.technologies ?? []).length > 0
-                    ? `${formData.technologies?.length} selecionadas`
+                  {formData.technologyIds.length > 0
+                    ? `${formData.technologyIds.length} selecionadas`
                     : "Selecione tecnologias"}
                   <ChevronDown size={16} />
                 </Button>
               </PopoverTrigger>
+
               <PopoverContent className="w-80 p-0">
                 <Command>
                   <CommandList className="max-h-64 overflow-y-auto">
-                    {Object.keys(technologiesByCategory).map((cat) => (
-                      <CommandGroup key={cat} heading={cat}>
-                        {technologiesByCategory[cat].map((tech) => {
-                          const isSelected = formData.technologies?.some(
-                            (t) => t.id === tech.id,
+                    {categories?.map((category: any) => (
+                      <CommandGroup key={category.id} heading={category.name}>
+                        {category.technologies.map((tech: any) => {
+                          const isSelected = formData.technologyIds.includes(
+                            tech.id,
                           );
+
                           return (
                             <CommandItem
                               key={tech.id}
-                              onSelect={() => handleToggleTechnology(tech)}
+                              onSelect={() => handleToggleTechnology(tech.id)}
                             >
                               <div className="flex items-center gap-2">
                                 <Checkbox checked={isSelected} />
@@ -155,17 +168,7 @@ export const EditProjectButton = ({ project: p }: { project: Project }) => {
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancelar
           </Button>
-          <Button
-            variant="default"
-            onClick={() =>
-              editProject(formData, {
-                onSuccess: () => {
-                  setOpen(false);
-                },
-              })
-            }
-            disabled={isPending}
-          >
+          <Button variant="default" onClick={handleSubmit} disabled={isPending}>
             {isPending ? "Salvando..." : "Salvar alterações"}
           </Button>
         </div>

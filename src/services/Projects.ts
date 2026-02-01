@@ -1,4 +1,4 @@
-import type { Project } from "@/types/types";
+import type { Project, ProjectUpdate } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -71,21 +71,35 @@ export function useDeleteProject() {
 
 export function useUpdateProject() {
   const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (project: Project) => {
+
+  return useMutation<Project, Error, ProjectUpdate>({
+    mutationFn: async (project) => {
+      const { id, ...data } = project;
+
       const response = await axios.put(
-        `${import.meta.env.VITE_API}/project/${project.id}`,
-        project,
-        {
-          withCredentials: true,
-        },
+        `${import.meta.env.VITE_API}/project/${id}`,
+        data,
+        { withCredentials: true },
       );
-      return response.data as Project;
+
+      return response.data;
     },
-    onSuccess: () => {
+
+    onSuccess: (updatedProject) => {
       toast.success("Projeto modificado com sucesso");
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
+
+      // Atualiza lista
+      queryClient.setQueryData<Project[]>(
+        ["projects"],
+        (old) =>
+          old?.map((p) => (p.id === updatedProject.id ? updatedProject : p)) ??
+          [],
+      );
+
+      // Atualiza cache do projeto individual
+      queryClient.setQueryData(["project", updatedProject.id], updatedProject);
     },
+
     onError: () => {
       toast.error("Erro ao modificar projeto");
     },

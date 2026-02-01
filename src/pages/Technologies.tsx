@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Trash2, Cpu } from 'lucide-react';
-import { NewTechnologyModal } from '@/components/NewTechnologieModal';
-import { Toaster } from 'sonner';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Trash2, Cpu } from "lucide-react";
+import { NewTechnologyModal } from "@/components/NewTechnologieModal";
+import { Toaster } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -11,18 +11,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   useCreateTechnology,
   useDeleteTechnology,
-  useFetchTechnologies,
   type newTech,
-} from '@/services/Technologies';
+} from "@/services/Technologies";
+import { useFetchCategoriesWithTech } from "@/services/Category";
 
 export default function Technologies() {
   const [open, setOpen] = useState(false);
 
-  const { data: technologies, isLoading: isTechLoading } = useFetchTechnologies();
+  const { data: technologies, isLoading: isTechLoading } =
+    useFetchCategoriesWithTech();
   const createTechnology = useCreateTechnology();
   const deleteTechnology = useDeleteTechnology();
 
@@ -31,18 +32,16 @@ export default function Technologies() {
     try {
       createTechnology.mutate(tech);
       setOpen(false);
-      // toast.success('Tecnologia criada com sucesso');
     } catch (error) {
-      console.error('Erro ao criar tecnologia:', error);
+      console.error("Erro ao criar tecnologia:", error);
     }
   };
 
   const excludeTechnology = async (technologyId: string) => {
     try {
       deleteTechnology.mutate(technologyId);
-      // toast.success('Tecnologia deletada com sucesso');
     } catch (error) {
-      console.error('Erro ao deletar tecnologia:', error);
+      console.error("Erro ao deletar tecnologia:", error);
     }
   };
 
@@ -59,7 +58,11 @@ export default function Technologies() {
           </p>
         </div>
 
-        <NewTechnologyModal open={open} setOpen={setOpen} handleCreate={handleCreate} />
+        <NewTechnologyModal
+          open={open}
+          setOpen={setOpen}
+          handleCreate={handleCreate}
+        />
       </header>
 
       {/* Lista de tecnologias */}
@@ -69,10 +72,12 @@ export default function Technologies() {
             <Cpu className="animate-spin text-cyan-400" />
           </div>
         ) : technologies?.length === 0 ? (
-          <p className="text-center text-muted-foreground py-20">Nenhuma tecnologia cadastrada.</p>
+          <p className="text-center text-muted-foreground py-20">
+            Nenhuma tecnologia cadastrada.
+          </p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {technologies?.map((tech) => (
+            {technologies?.map((tech: any) => (
               <div
                 key={tech.id}
                 className="bg-card border border-border rounded-xl p-5 shadow-sm flex justify-between items-center hover:shadow-md transition"
@@ -97,7 +102,8 @@ export default function Technologies() {
                     <DialogHeader>
                       <DialogTitle>Você realmente deseja excluir?</DialogTitle>
                       <DialogDescription>
-                        Essa ação apagará a tecnologia <strong>{tech.name}</strong> permanentemente.
+                        Essa ação apagará a tecnologia{" "}
+                        <strong>{tech.name}</strong> permanentemente.
                       </DialogDescription>
                     </DialogHeader>
 
@@ -105,13 +111,18 @@ export default function Technologies() {
                       <Button
                         variant="outline"
                         onClick={() => {
-                          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+                          document.dispatchEvent(
+                            new KeyboardEvent("keydown", { key: "Escape" }),
+                          );
                         }}
                       >
                         Cancelar
                       </Button>
 
-                      <Button variant="destructive" onClick={() => excludeTechnology(tech.id)}>
+                      <Button
+                        variant="destructive"
+                        onClick={() => excludeTechnology(tech.id)}
+                      >
                         Excluir
                       </Button>
                     </div>

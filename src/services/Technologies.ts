@@ -1,4 +1,3 @@
-import type { Technology } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -10,7 +9,7 @@ export type newTech = {
 };
 
 export function useFetchTechnologies() {
-  return useQuery<Technology[]>({
+  return useQuery({
     queryKey: ["technologies"],
     queryFn: async () => {
       const res = await axios.get(`${import.meta.env.VITE_API}/technology`);

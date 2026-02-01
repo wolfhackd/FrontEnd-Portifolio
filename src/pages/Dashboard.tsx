@@ -4,9 +4,9 @@ import { toast, Toaster } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { useCreateProject, useFetchProjects } from "@/services/Projects";
 import { dateFormater } from "@/utils/dateFormater";
-import type { Project } from "@/types/types";
 import DeleteProjectButton from "@/components/DeleteProjectButton";
 import { EditProjectButton } from "@/components/EditProjectButton";
+import type { Project, Technology } from "@/types/types";
 
 export const initialState: Project = {
   title: "",
@@ -66,7 +66,7 @@ export default function Dashboard() {
 
                   {/* List of technologies of the project */}
                   <div className="flex flex-wrap gap-1 mb-3">
-                    {p.technologies?.map((tech, index) => (
+                    {p.technologies?.map((tech: Technology, index: number) => (
                       <Badge key={index} variant="secondary">
                         {tech.name}
                       </Badge>
@@ -80,7 +80,7 @@ export default function Dashboard() {
                 </div>
 
                 <div className="flex justify-end gap-2 mt-4">
-                  <EditProjectButton project={p} />
+                  <EditProjectButton project={p as Project & { id: string }} />
 
                   <DeleteProjectButton project={p} />
                 </div>
