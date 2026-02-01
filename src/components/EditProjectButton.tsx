@@ -17,6 +17,7 @@ import type { Project, ProjectUpdate } from "@/types/types";
 
 type FormState = Omit<ProjectUpdate, "technologyIds"> & {
   technologyIds: string[];
+  images: string[];
 };
 
 type ExistingProject = Project & { id: string };
@@ -30,17 +31,18 @@ export const EditProjectButton = ({
   const [formData, setFormData] = useState<FormState>({
     ...p,
     technologyIds: [],
+    images: p.images ?? [],
   });
 
   const { data: categories } = useFetchCategoriesWithTech();
   const { mutate: editProject, isPending } = useUpdateProject();
 
-  // 🔥 Quando abrir, converte objetos → ids
   useEffect(() => {
     if (open) {
       setFormData({
         ...p,
         technologyIds: (p as any).technologies?.map((t: any) => t.id) ?? [],
+        images: p.images ?? [],
       });
     }
   }, [open, p]);
@@ -69,6 +71,20 @@ export const EditProjectButton = ({
     editProject(formData, {
       onSuccess: () => setOpen(false),
     });
+  };
+
+  const handleAddImage = (publicId: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, publicId],
+    }));
+  };
+
+  const handleRemoveImage = (publicId: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((img) => img !== publicId),
+    }));
   };
 
   return (
@@ -115,6 +131,46 @@ export const EditProjectButton = ({
               )}
             </div>
           ))}
+
+          {/* 🖼️ IMAGENS (strings) */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium">Images (public_id)</label>
+
+            {/* Input para adicionar */}
+            <input
+              placeholder="Ex: letmeaskone_rpozj7"
+              className="border p-2 rounded-md"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const value = (e.target as HTMLInputElement).value.trim();
+                  if (value) {
+                    handleAddImage(value);
+                    (e.target as HTMLInputElement).value = "";
+                  }
+                }
+              }}
+            />
+
+            {/* Lista das strings adicionadas */}
+            <div className="flex flex-col gap-1 mt-2">
+              {formData.images.map((img) => (
+                <div
+                  key={img}
+                  className="flex justify-between items-center border rounded px-2 py-1 text-sm"
+                >
+                  <span className="truncate">{img}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(img)}
+                    className="text-red-500 text-xs"
+                  >
+                    remover
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* 💎 TECNOLOGIAS */}
           <div className="flex flex-col gap-1">
